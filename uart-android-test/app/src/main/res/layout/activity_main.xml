@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,30 +7,71 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
     <Button
         android:id="@+id/bt_conectar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:text="Conectar"
-        android:layout_gravity="center"
-        />
-
-    <Button
-        android:id="@+id/bt_ligarLed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ligar LED" />
-
-    <Button
-        android:id="@+id/bt_desligarLed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Desligar LED" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/bt_desconectar"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Desconectar"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_conectar"
+        app:layout_constraintStart_toEndOf="@+id/bt_conectar" />
+
+    <Button
+        android:id="@+id/bt_ligarLed"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Ligar LED"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_conectar" />
+
+    <Button
+        android:id="@+id/bt_desligarLed"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Desligar LED"
+        app:layout_constraintStart_toEndOf="@+id/bt_ligarLed"
+        app:layout_constraintTop_toBottomOf="@+id/bt_conectar" />
+
+
+
+    <Button
+        android:id="@+id/bt_coletarDados"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Desconectar" />
-</LinearLayout>
+        android:text="Coletar Dados"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_ligarLed" />
+
+    <Button
+        android:id="@+id/bt_coletarDadosCalibrados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coletar Dados Calibrados"
+        app:layout_constraintStart_toEndOf="@+id/bt_coletarDados"
+        app:layout_constraintTop_toBottomOf="@+id/bt_ligarLed" />
+
+    <Button
+        android:id="@+id/bt_coletarRetorno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coletar retorno"
+        app:layout_constraintBottom_toTopOf="@+id/textViewRetornoSerial"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRetornoSerial"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
