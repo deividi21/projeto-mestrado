@@ -41,6 +41,7 @@ import java.util.EnumSet;
 import java.util.concurrent.Executors;
 
 public class TerminalFragment extends Fragment implements SerialInputOutputManager.Listener {
+}
 
     private enum UsbPermission { Unknown, Requested, Granted, Denied };
 

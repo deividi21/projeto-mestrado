@@ -3,7 +3,6 @@ package com.example.uart_android_test
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uart_android_test.databinding.ActivityMainBinding
@@ -13,8 +12,7 @@ import com.hoho.android.usbserial.driver.UsbSerialProber
 import com.hoho.android.usbserial.util.SerialInputOutputManager
 import java.util.concurrent.Executors
 
-
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
 
     lateinit var binding: ActivityMainBinding
     lateinit var driver: UsbSerialDriver
@@ -25,6 +23,13 @@ class MainActivity : AppCompatActivity() {
 
     private val WRITE_WAIT_MILLIS = 2000
     private val READ_WAIT_MILLIS = 2000
+
+    enum class EstadoComunicacao{
+        AGUARDANDO, RECEBENDO, ENVIANDO
+    }
+
+    var estadoCom: EstadoComunicacao = EstadoComunicacao.AGUARDANDO
+    var dadosSerial: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,14 +85,20 @@ class MainActivity : AppCompatActivity() {
             val ligaLed = byteArrayOf(0x41, 0x54, 0x4C, 0x45, 0x44, 0x30, 0x3D, 0x31, 0x0D, 0x0A)
             //                              A      T     L     E     D     0     =     1    \r    \n
 
+            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(ligaLed, WRITE_WAIT_MILLIS)
+            estadoCom = EstadoComunicacao.AGUARDANDO
+
         }
 
         botaoDesligarLed.setOnClickListener{
             val desligaLed = byteArrayOf(0x41, 0x54, 0x4C, 0x45, 0x44, 0x30, 0x3D, 0x30, 0x0D, 0x0A)
             //                              A      T     L     E     D     0     =     0    \r    \n
 
+            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(desligaLed, WRITE_WAIT_MILLIS)
+            estadoCom = EstadoComunicacao.AGUARDANDO
+
         }
 
         botaoColetarDadosCalibrados.setOnClickListener{
@@ -102,81 +113,66 @@ class MainActivity : AppCompatActivity() {
                 0x0A)
             //                                        A      T     C     D     A     T     A    \r    \n
 
+            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(coletarDadosCalibrados, WRITE_WAIT_MILLIS)
+            estadoCom = EstadoComunicacao.AGUARDANDO
+
         }
 
         botaoColetarDados.setOnClickListener{
             val coletarDados = byteArrayOf(0x41, 0x54, 0x44, 0x41, 0x54, 0x41, 0x0D, 0x0A)
             //                               A      T    D     A     T     A    \r    \n
 
+            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(coletarDados, WRITE_WAIT_MILLIS)
-        }
+            estadoCom = EstadoComunicacao.AGUARDANDO
 
-
-        fun onNewData(data: ByteArray?) {
-
-        }
-
-        open fun receive(data: ByteArray) {
-            val spn = SpannableStringBuilder()
-            spn.append("""receive ${data.size} bytes
-""")
-            if (data.size > 0) spn.append(HexDump.dumpHexString(data).toString() + "\n")
-            receiveText.append(spn)
         }
     }
 
+    override fun onNewData(data: ByteArray?){
 
-
-    private fun receberDadosSerial(){
-
-        var textoRetornoSerial = binding.textViewRetornoSerial
-        var len: Int
         var buffer = ByteArray(1024)
-        var finalizador: Boolean = false
-        var retorno: String
-        var qtdDados: Int = 0
+        var len: Int
         var dadosRecebidos: List<String>
-        var dados: List<Float>
+        var qtdDados: Int = 0
+        var retorno: String
 
+        if (estadoCom == EstadoComunicacao.AGUARDANDO) {
+            estadoCom = EstadoComunicacao.RECEBENDO
 
-        while(!finalizador)
-        {
             len = port.read(buffer, READ_WAIT_MILLIS);
             retorno = String(buffer)
+            dadosSerial = retorno
 
-            dadosRecebidos = retorno.split("OK")
+            dadosRecebidos = dadosSerial.split("OK")
             qtdDados = dadosRecebidos.size
 
-            while (qtdDados <= 1)
-            {
-                len = port.read(buffer, READ_WAIT_MILLIS);
-                retorno = String(buffer)
-
-                dadosRecebidos = retorno.split("OK")
-                qtdDados = dadosRecebidos.size
+            if(qtdDados>1) {
+                estadoCom = EstadoComunicacao.AGUARDANDO
             }
+        }
 
-            for (c in 0 until qtdDados)
-            {
-                val toast = Toast.makeText(applicationContext,
-                    qtdDados.toString(),
-                    Toast.LENGTH_SHORT).show()
+        if (estadoCom == EstadoComunicacao.RECEBENDO) {
+
+            len = port.read(buffer, READ_WAIT_MILLIS);
+            retorno = String(buffer)
+            dadosSerial += retorno
+
+            dadosRecebidos = dadosSerial.split("OK")
+            qtdDados = dadosRecebidos.size
+
+            if(qtdDados>1) {
+                estadoCom = EstadoComunicacao.AGUARDANDO
             }
-
-            textoRetornoSerial.text = retorno
-
-            finalizador = true
         }
 
 
     }
 
-    private fun limparSerial(){
-        var len: Int
-        var buffer = ByteArray(1024)
-        len = port.read(buffer, READ_WAIT_MILLIS)
-        val toast = Toast.makeText(applicationContext, String(buffer), Toast.LENGTH_SHORT).show()
+    override fun onRunError(e: Exception?){
+
     }
+
 }
 
