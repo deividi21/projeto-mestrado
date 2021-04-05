@@ -3,6 +3,8 @@ package com.example.uart_android_test
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uart_android_test.databinding.ActivityMainBinding
@@ -12,20 +14,21 @@ import com.hoho.android.usbserial.driver.UsbSerialProber
 import com.hoho.android.usbserial.util.SerialInputOutputManager
 import java.util.concurrent.Executors
 
-class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
+class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener{
 
     lateinit var binding: ActivityMainBinding
     lateinit var driver: UsbSerialDriver
     lateinit var connection: UsbDeviceConnection
     lateinit var port: UsbSerialPort
 
-    private var usbIoManager: SerialInputOutputManager? = null
+    lateinit var usbIoManager: SerialInputOutputManager
+    lateinit var mainLooper: Handler
 
     private val WRITE_WAIT_MILLIS = 2000
     private val READ_WAIT_MILLIS = 2000
 
     enum class EstadoComunicacao{
-        AGUARDANDO, RECEBENDO, ENVIANDO
+        AGUARDANDO, RECEBENDO, RECEBIDO
     }
 
     var estadoCom: EstadoComunicacao = EstadoComunicacao.AGUARDANDO
@@ -44,6 +47,8 @@ class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
         var botaoColetarDadosCalibrados = binding.btColetarDadosCalibrados
         var botaoColetarRetorno = binding.btColetarRetorno
 
+        mainLooper = Handler(Looper.getMainLooper())
+
         botaoConectar.setOnClickListener{
 
             var manager: UsbManager = getSystemService(USB_SERVICE) as UsbManager
@@ -51,11 +56,9 @@ class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
 
 
             if (availableDrivers.isEmpty()) {
-                Toast.makeText(
-                    applicationContext,
+                Toast.makeText(applicationContext,
                     "Nenhum dispositivo encontrado",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    Toast.LENGTH_SHORT).show()
 
             }
             else {
@@ -67,17 +70,17 @@ class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
                 port = driver.ports[0]
                 port.open(connection)
 
-                usbIoManager = SerialInputOutputManager(port)
-                Executors.newSingleThreadExecutor().submit(usbIoManager)
-
                 port.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
+
+                usbIoManager = SerialInputOutputManager(port, this)
+                Executors.newSingleThreadExecutor().submit(usbIoManager)
 
             }
         }
 
         botaoDesconectar.setOnClickListener{
             if (usbIoManager != null) usbIoManager!!.stop()
-            usbIoManager = null
+
             port.close()
         }
 
@@ -85,9 +88,7 @@ class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
             val ligaLed = byteArrayOf(0x41, 0x54, 0x4C, 0x45, 0x44, 0x30, 0x3D, 0x31, 0x0D, 0x0A)
             //                              A      T     L     E     D     0     =     1    \r    \n
 
-            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(ligaLed, WRITE_WAIT_MILLIS)
-            estadoCom = EstadoComunicacao.AGUARDANDO
 
         }
 
@@ -95,84 +96,72 @@ class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
             val desligaLed = byteArrayOf(0x41, 0x54, 0x4C, 0x45, 0x44, 0x30, 0x3D, 0x30, 0x0D, 0x0A)
             //                              A      T     L     E     D     0     =     0    \r    \n
 
-            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(desligaLed, WRITE_WAIT_MILLIS)
-            estadoCom = EstadoComunicacao.AGUARDANDO
 
         }
 
         botaoColetarDadosCalibrados.setOnClickListener{
-            val coletarDadosCalibrados = byteArrayOf(0x41,
-                0x54,
-                0x43,
-                0x44,
-                0x41,
-                0x54,
-                0x41,
-                0x0D,
-                0x0A)
+            val coletarDadosCalibrados = byteArrayOf(0x41, 0x54, 0x43, 0x44, 0x41, 0x54, 0x41, 0x0D, 0x0A)
             //                                        A      T     C     D     A     T     A    \r    \n
 
-            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(coletarDadosCalibrados, WRITE_WAIT_MILLIS)
-            estadoCom = EstadoComunicacao.AGUARDANDO
 
         }
 
         botaoColetarDados.setOnClickListener{
             val coletarDados = byteArrayOf(0x41, 0x54, 0x44, 0x41, 0x54, 0x41, 0x0D, 0x0A)
             //                               A      T    D     A     T     A    \r    \n
-
-            estadoCom = EstadoComunicacao.ENVIANDO
             port.write(coletarDados, WRITE_WAIT_MILLIS)
-            estadoCom = EstadoComunicacao.AGUARDANDO
 
         }
     }
 
-    override fun onNewData(data: ByteArray?){
+    private fun receive(data: ByteArray) {
 
-        var buffer = ByteArray(1024)
         var len: Int
         var dadosRecebidos: List<String>
         var qtdDados: Int = 0
         var retorno: String
 
-        if (estadoCom == EstadoComunicacao.AGUARDANDO) {
+        if ((estadoCom == EstadoComunicacao.AGUARDANDO) || (estadoCom == EstadoComunicacao.RECEBIDO)) {
             estadoCom = EstadoComunicacao.RECEBENDO
 
-            len = port.read(buffer, READ_WAIT_MILLIS);
-            retorno = String(buffer)
+            retorno = String(data)
             dadosSerial = retorno
+
 
             dadosRecebidos = dadosSerial.split("OK")
             qtdDados = dadosRecebidos.size
 
             if(qtdDados>1) {
-                estadoCom = EstadoComunicacao.AGUARDANDO
+                Toast.makeText(applicationContext, dadosSerial.trim(), Toast.LENGTH_SHORT).show()
+                estadoCom = EstadoComunicacao.RECEBIDO
             }
         }
+        else if (estadoCom == EstadoComunicacao.RECEBENDO) {
 
-        if (estadoCom == EstadoComunicacao.RECEBENDO) {
-
-            len = port.read(buffer, READ_WAIT_MILLIS);
-            retorno = String(buffer)
+            retorno = String(data)
             dadosSerial += retorno
 
             dadosRecebidos = dadosSerial.split("OK")
             qtdDados = dadosRecebidos.size
 
             if(qtdDados>1) {
-                estadoCom = EstadoComunicacao.AGUARDANDO
+                Toast.makeText(applicationContext, dadosSerial.trim(), Toast.LENGTH_SHORT).show()
+                estadoCom = EstadoComunicacao.RECEBIDO
             }
         }
-
-
     }
 
-    override fun onRunError(e: Exception?){
-
+    override fun onRunError(e: Exception) {
+        mainLooper.post {
+            Toast.makeText(applicationContext, "connection lost: " + e.message, Toast.LENGTH_SHORT).show()
+            port.close()
+        }
     }
 
+    override fun onNewData(data: ByteArray) {
+        mainLooper.post { receive(data) }
+    }
 }
 
