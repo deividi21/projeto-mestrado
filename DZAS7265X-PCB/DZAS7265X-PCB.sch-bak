@@ -14,19 +14,19 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 3925 925  2700 1600
+S 750  750  2700 1600
 U 61403BCE
 F0 "FTDI USB Converter" 50
 F1 "FTDI-USB-Converter.sch" 50
 $EndSheet
 $Sheet
-S 6825 925  2700 1600
+S 3650 750  2700 1600
 U 6151130E
 F0 "SPI Flash Memory" 50
 F1 "SPI-Flash-Memory.sch" 50
 $EndSheet
 $Sheet
-S 6200 4025 2700 1600
+S 6550 750  2700 1600
 U 61548E0F
 F0 "AS7254X Sensor" 50
 F1 "AS7265X-Sensor.sch" 50
