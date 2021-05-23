@@ -1,6 +1,6 @@
 library(tidyverse)
 library(neuralnet)
-
+library(randomForest)
 
 ####Importando Dados####
 sample_21195 <- read_delim("dados/21195_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
@@ -13,6 +13,7 @@ sample_21201 <- read_delim("dados/21201_1.csv",";", escape_double = FALSE, trim_
 sample_21202 <- read_delim("dados/21202_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
 sample_21210 <- read_delim("dados/21210_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
 sample_21227 <- read_delim("dados/21227_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_sadio <- read_delim("dados/sadio_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
 
 
 ####Selecionando Colunas de Interesse####
@@ -26,6 +27,7 @@ sample_21201.subset <- sample_21201[20:37]
 sample_21202.subset <- sample_21202[20:37]
 sample_21210.subset <- sample_21210[20:37]
 sample_21227.subset <- sample_21227[20:37]
+sample_sadio.subset <- sample_sadio[20:37]
 
 ####Adicionando Identificadores####
 sample_21195.subset <- mutate(sample_21195.subset, don = 1788)
@@ -58,6 +60,9 @@ sample_21210.subset <- tibble::rowid_to_column(sample_21210.subset, "id")
 sample_21227.subset <- mutate(sample_21227.subset, don = 307)
 sample_21227.subset <- mutate(sample_21227.subset, label = "21227")
 sample_21227.subset <- tibble::rowid_to_column(sample_21227.subset, "id")
+sample_sadio.subset <- mutate(sample_sadio.subset, don = 0)
+sample_sadio.subset <- mutate(sample_sadio.subset, label = "sadio")
+sample_sadio.subset <- tibble::rowid_to_column(sample_sadio.subset, "id")
 
 
 ####Unificando dados em um data frame####
@@ -70,7 +75,7 @@ wheat_dataset <- merge(wheat_dataset,sample_21201.subset,all.x = TRUE, all.y = T
 wheat_dataset <- merge(wheat_dataset,sample_21202.subset,all.x = TRUE, all.y = TRUE)
 wheat_dataset <- merge(wheat_dataset,sample_21210.subset,all.x = TRUE, all.y = TRUE)
 wheat_dataset <- merge(wheat_dataset,sample_21227.subset,all.x = TRUE, all.y = TRUE)
-
+wheat_dataset <- merge(wheat_dataset,sample_sadio.subset,all.x = TRUE, all.y = TRUE)
 
 wheat_dataset <- wheat_dataset %>% rename(R = 'Cal. R (610nm)',
                                           S = 'Cal. S (680nm)',
@@ -94,9 +99,24 @@ wheat_dataset <- wheat_dataset %>% rename(R = 'Cal. R (610nm)',
 
 ####Rede Neural####
 
+cbind(wheat_dataset[2:5],wheat_dataset[7:12],wheat_dataset[16:20])
 
-nn=neuralnet(label ~ R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,data=wheat_dataset, hidden=3,act.fct = "logistic",
-             linear.output = FALSE)
+teste <- scale(cbind(wheat_dataset[2:5],wheat_dataset[7:12],wheat_dataset[16:20]))
+
+nn=neuralnet(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,data=wheat_dataset, hidden=2,act.fct = "logistic",
+             linear.output = FALSE, stepmax=1e6)
+
+nn=neuralnet(label~R+S,data=wheat_dataset, hidden=2,act.fct = "logistic",
+             linear.output = FALSE, stepmax=1e6)
+
+
+plot(nn)
+
+rf <- randomForest(don~R+S+T+U+W+G+H+I+J+K+C+D+E+F, data = teste,
+                   nodesize = 1, importance = TRUE, na.action = na.omit)
+print(rf)
+
+plot(rf)
 
 
 
