@@ -4,7 +4,6 @@ library(class)
 library(caret)
 library(ggrepel)
 
-
 ####Importando Dados####
 sample_21195 <- read_delim("dados/21195_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
 sample_21196 <- read_delim("dados/21196_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
@@ -35,24 +34,34 @@ sample_giberela.subset <- sample_giberela[20:37]
 sample_sadio.subset <- sample_sadio[20:37]
 
 ####Adicionando Identificadores####
+sample_21195.subset <- mutate(sample_21195.subset, don = 1788)
 sample_21195.subset <- mutate(sample_21195.subset, label = "21195")
 sample_21195.subset <- tibble::rowid_to_column(sample_21195.subset, "id")
+sample_21196.subset <- mutate(sample_21196.subset, don = 483)
 sample_21196.subset <- mutate(sample_21196.subset, label = "21196")
 sample_21196.subset <- tibble::rowid_to_column(sample_21196.subset, "id")
+sample_21197.subset <- mutate(sample_21197.subset, don = 2113)
 sample_21197.subset <- mutate(sample_21197.subset, label = "21197")
 sample_21197.subset <- tibble::rowid_to_column(sample_21197.subset, "id")
+sample_21198.subset <- mutate(sample_21198.subset, don = 1508)
 sample_21198.subset <- mutate(sample_21198.subset, label = "21198")
 sample_21198.subset <- tibble::rowid_to_column(sample_21198.subset, "id")
+sample_21199.subset <- mutate(sample_21199.subset, don = 2009)
 sample_21199.subset <- mutate(sample_21199.subset, label = "21199")
 sample_21199.subset <- tibble::rowid_to_column(sample_21199.subset, "id")
+sample_21200.subset <- mutate(sample_21200.subset, don = 1943)
 sample_21200.subset <- mutate(sample_21200.subset, label = "21200")
 sample_21200.subset <- tibble::rowid_to_column(sample_21200.subset, "id")
+sample_21201.subset <- mutate(sample_21201.subset, don = 0)
 sample_21201.subset <- mutate(sample_21201.subset, label = "21201")
 sample_21201.subset <- tibble::rowid_to_column(sample_21201.subset, "id")
+sample_21202.subset <- mutate(sample_21202.subset, don = 0)
 sample_21202.subset <- mutate(sample_21202.subset, label = "21202")
 sample_21202.subset <- tibble::rowid_to_column(sample_21202.subset, "id")
+sample_21210.subset <- mutate(sample_21210.subset, don = 799)
 sample_21210.subset <- mutate(sample_21210.subset, label = "21210")
 sample_21210.subset <- tibble::rowid_to_column(sample_21210.subset, "id")
+sample_21227.subset <- mutate(sample_21227.subset, don = 307)
 sample_21227.subset <- mutate(sample_21227.subset, label = "21227")
 sample_21227.subset <- tibble::rowid_to_column(sample_21227.subset, "id")
 
@@ -71,17 +80,21 @@ wheat_dataset <- merge(wheat_dataset,sample_21201.subset,all.x = TRUE, all.y = T
 wheat_dataset <- merge(wheat_dataset,sample_21202.subset,all.x = TRUE, all.y = TRUE)
 wheat_dataset <- merge(wheat_dataset,sample_21210.subset,all.x = TRUE, all.y = TRUE)
 wheat_dataset <- merge(wheat_dataset,sample_21227.subset,all.x = TRUE, all.y = TRUE)
-wheat_dataset <- merge(wheat_dataset,sample_giberela.subset,all.x = TRUE, all.y = TRUE)
-wheat_dataset <- merge(wheat_dataset,sample_sadio.subset,all.x = TRUE, all.y = TRUE)
+
+#wheat_dataset <- merge(wheat_dataset,sample_giberela.subset,all.x = TRUE, all.y = TRUE)
+#wheat_dataset <- merge(wheat_dataset,sample_sadio.subset,all.x = TRUE, all.y = TRUE)
 
 ####Normalizacao####
 min_max_norm <- function(x) {
   (x - min(x)) / (max(x) - min(x))
 }
 
-wheat_dataset.n1 <- scale(wheat_dataset[2:19])
+wheat_dataset.n1 <- scale(wheat_dataset[2:20])
 
-wheat_dataset.n2 <- as.data.frame(lapply(wheat_dataset[,2:19], min_max_norm))
+wheat_dataset.n2 <- as.data.frame(lapply(wheat_dataset[,2:20], min_max_norm))
+
+wheat_dataset.n1 <- replace(wheat_dataset.n1, is.na(wheat_dataset.n1), 0)
+wheat_dataset.n2 <- replace(wheat_dataset.n2, is.na(wheat_dataset.n2), 0)
 
 ####Geracao de Graficos####
 
@@ -130,40 +143,23 @@ ggplot(data = filter(wheat_dataset_plot, label == c('giberela'))) +
 
 
 
-####Teste 1 para o algoritmo knn#####
+####Teste 1 para o algoritmo knn - Classificação#####
 set.seed(101)
 
-final.data <- cbind(wheat_dataset.n1,wheat_dataset[20])
+final.data <- wheat_dataset.n2
 
 head(final.data)
 
 set.seed(101)
 
-sample <- sample.split(final.data$label, SplitRatio = .70)
+sample <- sample.split(final.data$don, SplitRatio = .70)
 train <- subset(final.data, sample == TRUE)
 test <- subset(final.data, sample == FALSE)
 
-predicted.samples <- knn(wheat_dataset[2:19],sample_21195.subset[2:19],wheat_dataset$label,k=9)
-error.df <- mean(test$label != predicted.samples)
-
-table(predicted.samples)
-
-####Teste 2 para o algoritmo knn#####
-set.seed(123)
-dat.d <- sample(1:nrow(wheat_dataset.n2),size=nrow(wheat_dataset.n2)*0.7,replace = FALSE) #random selection of 70% data.
-
-train.loan <- wheat_dataset.n2[dat.d,] # 70% training data
-test.loan <- wheat_dataset.n2[-dat.d,] # remaining 30% test data
-
-#Creating seperate dataframe for 'Creditability' feature which is our target.
-train.loan_labels <- wheat_dataset[dat.d,19]
-test.loan_labels <-wheat_dataset[-dat.d,19]
-
-knn.9 <- knn(train=train.loan, test=test.loan, cl=train.loan_labels, k=9)
-acc.9 <- 100 * sum(test.loan_labels == knn.9)/NROW(test.loan_labels)
-
-table(knn.9 ,test.loan_labels)
-
+predicted.samples <- knn(train[1:18],test[1:18],train$don,k=9)
+error.df <- mean(test$don != predicted.samples)
+error.df
+table(predicted.samples,test$don)
 
 #Teste para k de 1 a 30
 media <- c(1:30)
