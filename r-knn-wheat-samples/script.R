@@ -18,6 +18,20 @@ sample_21227 <- read_delim("dados/21227_1.csv",";", escape_double = FALSE, trim_
 sample_giberela <- read_delim("dados/giberela_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
 sample_sadio <- read_delim("dados/sadio_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
 
+####Importando Dados####
+sample_21195 <- read_delim("dados/21195_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21196 <- read_delim("dados/21196_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21197 <- read_delim("dados/21197_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21198 <- read_delim("dados/21198_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21199 <- read_delim("dados/21199_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21200 <- read_delim("dados/21200_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21201 <- read_delim("dados/21201_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21202 <- read_delim("dados/21202_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21210 <- read_delim("dados/21210_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21227 <- read_delim("dados/21227_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_giberela <- read_delim("dados/giberela_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_sadio <- read_delim("dados/sadio_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+
 
 ####Selecionando Colunas de Interesse####
 sample_21195.subset <- sample_21195[20:37]
@@ -67,6 +81,8 @@ sample_21227.subset <- tibble::rowid_to_column(sample_21227.subset, "id")
 
 sample_giberela.subset <- mutate(sample_giberela.subset, label = "giberela")
 sample_giberela.subset <- tibble::rowid_to_column(sample_giberela.subset, "id")
+sample_21227.subset <- mutate(sample_21227.subset, don = 2000)
+sample_sadio.subset <- mutate(sample_sadio.subset, don = 0)
 sample_sadio.subset <- mutate(sample_sadio.subset, label = "sadio")
 sample_sadio.subset <- tibble::rowid_to_column(sample_sadio.subset, "id")
 
@@ -81,17 +97,17 @@ wheat_dataset <- merge(wheat_dataset,sample_21202.subset,all.x = TRUE, all.y = T
 wheat_dataset <- merge(wheat_dataset,sample_21210.subset,all.x = TRUE, all.y = TRUE)
 wheat_dataset <- merge(wheat_dataset,sample_21227.subset,all.x = TRUE, all.y = TRUE)
 
-#wheat_dataset <- merge(wheat_dataset,sample_giberela.subset,all.x = TRUE, all.y = TRUE)
-#wheat_dataset <- merge(wheat_dataset,sample_sadio.subset,all.x = TRUE, all.y = TRUE)
+wheat_dataset <- merge(wheat_dataset,sample_giberela.subset,all.x = TRUE, all.y = TRUE)
+wheat_dataset <- merge(wheat_dataset,sample_sadio.subset,all.x = TRUE, all.y = TRUE)
 
 ####Normalizacao####
 min_max_norm <- function(x) {
   (x - min(x)) / (max(x) - min(x))
 }
 
-wheat_dataset.n1 <- scale(wheat_dataset[2:20])
+wheat_dataset.n1 <- scale(wheat_dataset[2:19])
 
-wheat_dataset.n2 <- as.data.frame(lapply(wheat_dataset[,2:20], min_max_norm))
+wheat_dataset.n2 <- as.data.frame(lapply(wheat_dataset[2:19], min_max_norm))
 
 wheat_dataset.n1 <- replace(wheat_dataset.n1, is.na(wheat_dataset.n1), 0)
 wheat_dataset.n2 <- replace(wheat_dataset.n2, is.na(wheat_dataset.n2), 0)
@@ -135,7 +151,7 @@ ggplot(data = filter(wheat_dataset_plot, label != c('giberela'))) +
 
 wheat_dataset_plot %>%
   ggplot(aes(x = wavelength, y = response, colour = label)) + 
-  geom_smooth(size = 1.5)
+  geom_smooth(size = 2)
 
 
 ggplot(data = filter(wheat_dataset_plot, label == c('giberela'))) + 

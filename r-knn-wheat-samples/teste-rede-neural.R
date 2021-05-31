@@ -1,19 +1,20 @@
 library(tidyverse)
 library(neuralnet)
 library(randomForest)
+library(yardstick)
 
 ####Importando Dados####
-sample_21195 <- read_delim("dados/21195_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21196 <- read_delim("dados/21196_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21197 <- read_delim("dados/21197_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21198 <- read_delim("dados/21198_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21199 <- read_delim("dados/21199_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21200 <- read_delim("dados/21200_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21201 <- read_delim("dados/21201_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21202 <- read_delim("dados/21202_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21210 <- read_delim("dados/21210_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_21227 <- read_delim("dados/21227_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
-sample_sadio <- read_delim("dados/sadio_1.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21195 <- read_delim("dados/21195_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21196 <- read_delim("dados/21196_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21197 <- read_delim("dados/21197_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21198 <- read_delim("dados/21198_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21199 <- read_delim("dados/21199_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21200 <- read_delim("dados/21200_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21201 <- read_delim("dados/21201_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21202 <- read_delim("dados/21202_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21210 <- read_delim("dados/21210_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_21227 <- read_delim("dados/21227_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sample_sadio <- read_delim("dados/sadio_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
 
 
 ####Selecionando Colunas de Interesse####
@@ -99,24 +100,82 @@ wheat_dataset <- wheat_dataset %>% rename(R = 'Cal. R (610nm)',
 
 ####Rede Neural####
 
-cbind(wheat_dataset[2:5],wheat_dataset[7:12],wheat_dataset[16:20])
+teste <- scale(wheat_dataset[2:20])
 
-teste <- scale(cbind(wheat_dataset[2:5],wheat_dataset[7:12],wheat_dataset[16:20]))
+teste <- replace(teste, is.na(teste), 0)
 
-nn=neuralnet(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,data=wheat_dataset, hidden=2,act.fct = "logistic",
+nn=neuralnet(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,data=wheat_dataset, hidden=3,act.fct = "logistic",
              linear.output = FALSE, stepmax=1e6)
-
-nn=neuralnet(label~R+S,data=wheat_dataset, hidden=2,act.fct = "logistic",
-             linear.output = FALSE, stepmax=1e6)
-
 
 plot(nn)
 
-rf <- randomForest(don~R+S+T+U+W+G+H+I+J+K+C+D+E+F, data = teste,
-                   nodesize = 1, importance = TRUE, na.action = na.omit)
-print(rf)
+print(nn)
 
-plot(rf)
+####Randon Forest####
+
+write.csv(wheat_dataset,"C:\\Users\\deivi\\Documents\\GitHub\\projeto-mestrado\\r-knn-wheat-samples\\wheat_dataset.csv", row.names = FALSE)
+
+
+set.seed(8675309)
+
+rf <- as.data.frame(scale(wheat_dataset[2:20]))
+
+rf <- as.data.frame(replace(rf.data, is.na(rf.data), 0))
+
+sample.rf <- sample.split(rf$don, SplitRatio = .90)
+train.rf <- subset(rf, sample == TRUE)
+test.rf <- subset(rf, sample == FALSE)
+
+model.rf <- randomForest(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
+                         data = train.rf,
+                         importance = TRUE,
+                         proximity = TRUE,
+                         keep.forest=TRUE)
+print(model.rf)
+
+y_hat <- predict(model.rf, test.rf)
+
+test.rf_scored <- as_tibble(cbind(test.rf, y_hat))
+glimpse(test.rf_scored)
+RMSE_rf_TEST <- yardstick::rmse(test.rf_scored, truth=don, estimate=y_hat)
+RMSE_rf_TEST
+
+plot(model.rf)
+
+####KNN####
+set.seed(101)
+
+knn <- wheat_dataset[2:20]
+
+head(knn)
+
+sample.knn <- sample.split(knn$don, SplitRatio = .70)
+train.knn <- subset(knn, sample == TRUE)
+test.knn <- subset(knn, sample == FALSE)
+
+predicted.samples.knn <- knn(train.knn[1:18],test.knn[1:18],train.knn$don,k=11)
+error.df.knn <- mean(test.knn$don != predicted.samples.knn)
+error.df.knn
+table(predicted.samples.knn,test.knn$don)
+
+#Teste para k de 1 a 30
+media <- c(1:30)
+
+for (i in 1:30) {
+  predicted.samples.knn <- knn(train.knn[1:18],test.knn[1:18],train.knn$don,k=i)
+  media[i] <- mean(test.knn$don != predicted.samples.knn)
+}
+
+k.values <- 1:30
+
+error.df <- data.frame(media,k.values)
+
+
+ggplot(error.df,aes(x=k.values,y=media)) + geom_point()+ geom_line(lty="dotted",color='red')
+
+
+
+
 
 
 
