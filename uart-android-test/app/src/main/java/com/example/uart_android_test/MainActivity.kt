@@ -12,6 +12,7 @@ import com.hoho.android.usbserial.driver.UsbSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialPort
 import com.hoho.android.usbserial.driver.UsbSerialProber
 import com.hoho.android.usbserial.util.SerialInputOutputManager
+import java.lang.Exception
 import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
@@ -109,6 +110,14 @@ class MainActivity : AppCompatActivity(), SerialInputOutputManager.Listener {
             //                               A      T    D     A     T     A    \r    \n
             port.write(coletarDados, WRITE_WAIT_MILLIS)
         }
+    }
+
+    override fun onNewData(data: ByteArray?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onRunError(e: Exception?) {
+        TODO("Not yet implemented")
     }
 
 }
