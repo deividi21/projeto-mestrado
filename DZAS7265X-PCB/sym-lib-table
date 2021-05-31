@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name DZAS7265X-PCB-rescue)(type Legacy)(uri ${KIPRJMOD}/DZAS7265X-PCB-rescue.lib)(options "")(descr ""))
+)

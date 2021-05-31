@@ -1,0 +1,1514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>C:\Users\deivi\Documents\GitHub\projeto-mestrado\DZAS7265X-PCB\DZAS7265X-PCB.sch</source>
+    <date>25/05/2021 19:38:55</date>
+    <tool>Eeschema (5.1.10)-1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>PCB DZAS7265X</title>
+        <company>UPF</company>
+        <rev>1.0</rev>
+        <date/>
+        <source>DZAS7265X-PCB.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/FTDI USB Converter/" tstamps="/61403BCE/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>FTDI-USB-Converter.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/SPI Flash Memory/" tstamps="/6151130E/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>SPI-Flash-Memory.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="4" name="/AS7254X Sensor/" tstamps="/61548E0F/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>AS7265X-Sensor.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U1">
+      <value>FT232RQ</value>
+      <footprint>QFN50P500X500X90-33N</footprint>
+      <datasheet>https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT232R.pdf</datasheet>
+      <fields>
+        <field name="Desc">IC USB FS SERIAL UART 32-QFN</field>
+        <field name="PN_DIGIKEY">768-1008-2-ND</field>
+        <field name="PRICE_DIGIKEY">4.60</field>
+      </fields>
+      <libsource lib="FT232RQ" part="FT232RQ" description=""/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61425AB6</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>0805B104J500CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">100nF</field>
+        <field name="Desc">CAP CER 0.1UF 5% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1564-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.18</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61425AD8</tstamp>
+    </comp>
+    <comp ref="FB1">
+      <value>BLM21PG221SZ1D</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/en-us/products/productdata/8796749987870/QNFA9114.pdf</datasheet>
+      <fields>
+        <field name="Comment">80R/2A</field>
+        <field name="Desc">FERRITE BEAD 220 OHM 2A 0805</field>
+        <field name="PN_DIGIKEY">490-16661-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.12</field>
+      </fields>
+      <libsource lib="Device" part="Ferrite_Bead" description="Ferrite bead"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61435A7E</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>0805B103K250CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">10nF</field>
+        <field name="Desc">CAP CER 10000PF 10% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1561-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.11</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61435A86</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>LG R971-KN-1</value>
+      <footprint>LED_SMD:LED_0805_2012Metric</footprint>
+      <datasheet>https://dammedia.osram.info/media/resource/hires/osram-dam-14795755/LG%20R971_EN.pdf</datasheet>
+      <fields>
+        <field name="Desc">LED GRN DIF 2.2V 20MA 0805</field>
+        <field name="PN_DIGIKEY">475-1410-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.26</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B37</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>0805B104J500CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">100nF</field>
+        <field name="Desc">CAP CER 0.1UF 5% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1564-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.18</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B4B</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>C0805C475K4PACTU</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://api.kemet.com/component-edge/download/datasheet/C0805C475K8RACTU.pdf</datasheet>
+      <fields>
+        <field name="Comment">4.7uF</field>
+        <field name="Desc">CAP CER 4.7UF 10% 10V X7R 0805</field>
+        <field name="PN_DIGIKEY">399-8101-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.28</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B53</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>CRCW0805270RJNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">270</field>
+        <field name="Desc">RES SMD 270 OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-270ATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B5B</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>LG R971-KN-1</value>
+      <footprint>LED_SMD:LED_0805_2012Metric</footprint>
+      <datasheet>https://dammedia.osram.info/media/resource/hires/osram-dam-14795755/LG%20R971_EN.pdf</datasheet>
+      <fields>
+        <field name="Desc">LED GRN DIF 2.2V 20MA 0805</field>
+        <field name="PN_DIGIKEY">475-1410-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.26</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B63</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>CRCW0805270RJNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">270</field>
+        <field name="Desc">RES SMD 270 OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-270ATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B6B</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B88</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B96</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447B9E</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447BAE</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>61447BB6</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>TPS74633PQWDRBRQ1</value>
+      <footprint>Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm_ThermalVias</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/tps746-q1.pdf?HQS=dis-dk-null-digikeymode-dsf-pf-null-wwe&amp;ts=1618314944230</datasheet>
+      <fields>
+        <field name="Desc">AUTOMOTIVE LDO 1-A, LOW-IQ, HIGH-PSR</field>
+        <field name="PN_DIGIKEY">296-TPS74633PQWDRBRQ1TR-ND</field>
+        <field name="PRICE_DIGIKEY">1.32</field>
+      </fields>
+      <libsource lib="DZAS7265X-PCB-rescue" part="TPS74633PQWDRBRQ1-Regulator_Linear" description=""/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>6147B9DB</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>C0805C106K8PACTU</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://api.kemet.com/component-edge/download/datasheet/C0805C106K8PACTU.pdf</datasheet>
+      <fields>
+        <field name="Comment">10uF</field>
+        <field name="Desc">CAP CER 10UF 10% 10V X5R 0805</field>
+        <field name="PN_DIGIKEY">399-4925-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.15</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>6147B9E3</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>C0805C106K8PACTU</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://api.kemet.com/component-edge/download/datasheet/C0805C106K8PACTU.pdf</datasheet>
+      <fields>
+        <field name="Comment">10uF</field>
+        <field name="Desc">CAP CER 10UF 10% 10V X5R 0805</field>
+        <field name="PN_DIGIKEY">399-4925-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.15</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>6147B9F6</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>0805B103K250CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">10nF</field>
+        <field name="Desc">CAP CER 10000PF 10% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1561-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.11</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>6147BA52</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>USB3100-30-A</value>
+      <footprint>GCT_USB3100-XX-X_REVB</footprint>
+      <datasheet>https://gct.co/files/specs/USB3100-spec.pdf</datasheet>
+      <fields>
+        <field name="Desc">MICRO USB RECEPTACLE TYPE B 5 PIN SMT HORIZONTAL TOP MOUNT (REVERSE)</field>
+        <field name="PN_DIGIKEY">2073-USB3100-30-ATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.67</field>
+      </fields>
+      <libsource lib="USB3100-XX-X_REVB" part="USB3100-XX-X_REVB" description=""/>
+      <sheetpath names="/FTDI USB Converter/" tstamps="/61403BCE/"/>
+      <tstamp>60964854</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>AT25SF041B-SHD-B</value>
+      <footprint>SOIC127P790X216-8N</footprint>
+      <datasheet>https://www.dialog-semiconductor.com/sites/default/files/at25sf041b.pdf</datasheet>
+      <fields>
+        <field name="Desc">IC FLASH 4MBIT SPI/QUAD 8SOIC</field>
+        <field name="PN_DIGIKEY">1265-AT25SF041B-SHD-B-ND</field>
+        <field name="PRICE_DIGIKEY">0.36</field>
+      </fields>
+      <libsource lib="AT25SF041B-SHD-B" part="AT25SF041B-SHD-B" description=""/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>61530862</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>C0805C105K4RACTU</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://api.kemet.com/component-edge/download/datasheet/C0805C105K4RACTU.pdf</datasheet>
+      <fields>
+        <field name="Comment">1uF</field>
+        <field name="Desc">CAP CER 1UF 10% 10V X7R 0805</field>
+        <field name="PN_DIGIKEY">399-1284-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.14</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>61530889</tstamp>
+    </comp>
+    <comp ref="FB2">
+      <value>BLM21BD601SH1D</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/en-us/products/productdata/8796740354078/QNFA9102.pdf</datasheet>
+      <fields>
+        <field name="Comment">600R/0.3A</field>
+        <field name="Desc">FERRITE BEAD 600 OHM 300mA 0805</field>
+        <field name="PN_DIGIKEY">490-11047-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.18</field>
+      </fields>
+      <libsource lib="Device" part="Ferrite_Bead" description="Ferrite bead"/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>61530899</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>0805B104J500CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">100nF</field>
+        <field name="Desc">CAP CER 0.1UF 5% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1564-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.18</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>615308A1</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>0022032071</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Horizontal</footprint>
+      <datasheet>https://www.molex.com/pdm_docs/sd/022032071_sd.pdf</datasheet>
+      <fields>
+        <field name="Desc">CONN HEADER VERT 7 POS 2.54MM</field>
+        <field name="PN_DIGIKEY">WM4005-ND</field>
+        <field name="PRICE_DIGIKEY">0.72</field>
+      </fields>
+      <libsource lib="Connector" part="Conn_01x07_Female" description="Generic connector, single row, 01x07, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>615308C3</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>DTC113ZUAT106</value>
+      <footprint>Package_TO_SOT_SMD:SOT-323_SC-70</footprint>
+      <datasheet>https://d1d2qsbl8m0m72.cloudfront.net/en/products/databook/datasheet/discrete/transistor/digital/dtc113zkat146-e.pdf</datasheet>
+      <fields>
+        <field name="Desc">TRANS PREBIAS NPN 200MW UMT3</field>
+        <field name="PN_DIGIKEY">DTC113ZUAT106TR-ND</field>
+        <field name="PRICE_DIGIKEY">0.20</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="DTC113Z" description="Digital NPN Transistor, 1k/10k, SOT-23"/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>61530909</tstamp>
+    </comp>
+    <comp ref="J4">
+      <value>1734592-8</value>
+      <footprint>TE_1734592-8</footprint>
+      <datasheet>https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&amp;DocNm=1734592&amp;DocType=Customer+Drawing&amp;DocLang=English</datasheet>
+      <fields>
+        <field name="Desc">CONN FPC BOTTOM 8POS 0.50MM R/A</field>
+        <field name="PN_DIGIKEY">A100281TR-ND</field>
+        <field name="PRICE_DIGIKEY">0.46</field>
+      </fields>
+      <libsource lib="1734592-8" part="1734592-8" description=""/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>615308E8</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>TC2030-IDC-NL</value>
+      <footprint>TAG_TC2030-IDC-NL</footprint>
+      <datasheet>https://media.digikey.com/pdf/Data%20Sheets/Tag-Connect/TC2030-IDC_RevB.pdf</datasheet>
+      <fields>
+        <field name="Desc">CABLE ADAPTER 6 POS</field>
+      </fields>
+      <libsource lib="TC2030-IDC-NL" part="TC2030-IDC-NL" description=""/>
+      <sheetpath names="/SPI Flash Memory/" tstamps="/6151130E/"/>
+      <tstamp>615308AA</tstamp>
+    </comp>
+    <comp ref="U4">
+      <value>AS72651-BLGT</value>
+      <footprint>PQFN65P470X450X270-20N</footprint>
+      <datasheet>https://ams.com/documents/20143/36005/AS7265x_DS000612_1-00.pdf/08051c8a-a7f6-6231-7993-2d3fe0bf38b8</datasheet>
+      <fields>
+        <field name="Desc">SMART VIS-NIR SPECTRAL SENSOR</field>
+        <field name="PN_DIGIKEY">AS72651-BLGTTR-ND</field>
+        <field name="PRICE_DIGIKEY">7.22</field>
+      </fields>
+      <libsource lib="DZAS7265X-PCB-rescue" part="AS72651-BLGT-AS72651" description=""/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6155508F</tstamp>
+    </comp>
+    <comp ref="U5">
+      <value>AS72652-BLGT</value>
+      <footprint>PQFN65P470X450X270-20N</footprint>
+      <datasheet>https://ams.com/documents/20143/36005/AS7265x_DS000612_1-00.pdf/08051c8a-a7f6-6231-7993-2d3fe0bf38b8</datasheet>
+      <fields>
+        <field name="Desc">SMART VIS-NIR SPECTRAL SENSOR</field>
+        <field name="PN_DIGIKEY">AS72652-BLGTTR-ND</field>
+        <field name="PRICE_DIGIKEY">7.22</field>
+      </fields>
+      <libsource lib="DZAS7265X-PCB-rescue" part="AS72652-BLGT-AS72652" description=""/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>61555098</tstamp>
+    </comp>
+    <comp ref="U6">
+      <value>AS72653-BLGT</value>
+      <footprint>PQFN65P470X450X270-20N</footprint>
+      <datasheet>https://ams.com/documents/20143/36005/AS7265x_DS000612_1-00.pdf/08051c8a-a7f6-6231-7993-2d3fe0bf38b8</datasheet>
+      <fields>
+        <field name="Desc">SMART VIS-NIR SPECTRAL SENSOR</field>
+        <field name="PN_DIGIKEY">AS72653-BLGTTR-ND</field>
+        <field name="PRICE_DIGIKEY">7.22</field>
+      </fields>
+      <libsource lib="DZAS7265X-PCB-rescue" part="AS72653-BLGT-AS72653" description=""/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>615550A1</tstamp>
+    </comp>
+    <comp ref="C10">
+      <value>C0805C105K4RACTU</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://api.kemet.com/component-edge/download/datasheet/C0805C105K4RACTU.pdf</datasheet>
+      <fields>
+        <field name="Comment">1uF</field>
+        <field name="Desc">CAP CER 1UF 10% 10V X7R 0805</field>
+        <field name="PN_DIGIKEY">399-1284-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.14</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6081B2CC</tstamp>
+    </comp>
+    <comp ref="C12">
+      <value>C0805C105K4RACTU</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://api.kemet.com/component-edge/download/datasheet/C0805C105K4RACTU.pdf</datasheet>
+      <fields>
+        <field name="Comment">1uF</field>
+        <field name="Desc">CAP CER 1UF 10% 10V X7R 0805</field>
+        <field name="PN_DIGIKEY">399-1284-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.14</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608323F6</tstamp>
+    </comp>
+    <comp ref="C13">
+      <value>0805B104J500CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">100nF</field>
+        <field name="Desc">CAP CER 0.1UF 5% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1564-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.18</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608323FE</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>0805B104J500CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">100nF</field>
+        <field name="Desc">CAP CER 0.1UF 5% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1564-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.18</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6081B2D4</tstamp>
+    </comp>
+    <comp ref="C14">
+      <value>C0805C105K4RACTU</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://api.kemet.com/component-edge/download/datasheet/C0805C105K4RACTU.pdf</datasheet>
+      <fields>
+        <field name="Comment">1uF</field>
+        <field name="Desc">CAP CER 1UF 10% 10V X7R 0805</field>
+        <field name="PN_DIGIKEY">399-1284-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.14</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608391B7</tstamp>
+    </comp>
+    <comp ref="C15">
+      <value>0805B104J500CT</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>http://www.passivecomponent.com/wp-content/uploads/2018/10/MLCC.pdf</datasheet>
+      <fields>
+        <field name="Comment">100nF</field>
+        <field name="Desc">CAP CER 0.1UF 5% 25V X7R 0805</field>
+        <field name="PN_DIGIKEY">1292-1564-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.18</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608391BF</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>L1SP-PNK1002800000</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <datasheet>https://www.lumileds.com/wp-content/uploads/files/DS237-luxeon-sunplus-2835-line-datasheet.pdf</datasheet>
+      <fields>
+        <field name="Desc">LUXEON SUNPLUS 2835 WHITE</field>
+        <field name="PN_DIGIKEY">1416-2062-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.63</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6083D52F</tstamp>
+    </comp>
+    <comp ref="R13">
+      <value>CRCW080533R0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">33</field>
+        <field name="Desc">RES SMD 33 OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-33ATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6083D537</tstamp>
+    </comp>
+    <comp ref="D4">
+      <value>LG R971-KN-1</value>
+      <footprint>LED_SMD:LED_0805_2012Metric</footprint>
+      <datasheet>https://dammedia.osram.info/media/resource/hires/osram-dam-14795755/LG%20R971_EN.pdf</datasheet>
+      <fields>
+        <field name="Desc">LED GRN DIF 2.2V 20MA 0805</field>
+        <field name="PN_DIGIKEY">475-1410-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.26</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>60854701</tstamp>
+    </comp>
+    <comp ref="D5">
+      <value>L1SP-FRD0002800000</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <datasheet>https://www.lumileds.com/wp-content/uploads/files/DS237-luxeon-sunplus-2835-line-datasheet.pdf</datasheet>
+      <fields>
+        <field name="Desc">LUXEON SUNPLUS 2835 FAR RED</field>
+        <field name="PN_DIGIKEY">1416-2055-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.69</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6085ED69</tstamp>
+    </comp>
+    <comp ref="R14">
+      <value>CRCW0805100RJNEAC</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>http://www.vishay.com/docs/28773/crcwce3.pdf</datasheet>
+      <fields>
+        <field name="Comment">100</field>
+        <field name="Desc">RES 100 OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-4166-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6085ED75</tstamp>
+    </comp>
+    <comp ref="D6">
+      <value>LG R971-KN-1</value>
+      <footprint>LED_SMD:LED_0805_2012Metric</footprint>
+      <datasheet>https://dammedia.osram.info/media/resource/hires/osram-dam-14795755/LG%20R971_EN.pdf</datasheet>
+      <fields>
+        <field name="Desc">LED GRN DIF 2.2V 20MA 0805</field>
+        <field name="PN_DIGIKEY">475-1410-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.26</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6085ED8D</tstamp>
+    </comp>
+    <comp ref="D7">
+      <value>SIR67-21C/TR8</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <datasheet>https://www.everlight.com/file/ProductFile/201407052129409395.pdf</datasheet>
+      <fields>
+        <field name="Desc">EMITTER IR 875NM 65MA SMD</field>
+        <field name="PN_DIGIKEY">1080-1427-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.64</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608634DA</tstamp>
+    </comp>
+    <comp ref="R15">
+      <value>CRCW0805100RJNEAC</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>http://www.vishay.com/docs/28773/crcwce3.pdf</datasheet>
+      <fields>
+        <field name="Comment">100</field>
+        <field name="Desc">RES 100 OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-4166-1-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608634E6</tstamp>
+    </comp>
+    <comp ref="D8">
+      <value>LG R971-KN-1</value>
+      <footprint>LED_SMD:LED_0805_2012Metric</footprint>
+      <datasheet>https://dammedia.osram.info/media/resource/hires/osram-dam-14795755/LG%20R971_EN.pdf</datasheet>
+      <fields>
+        <field name="Desc">LED GRN DIF 2.2V 20MA 0805</field>
+        <field name="PN_DIGIKEY">475-1410-2-ND</field>
+        <field name="PRICE_DIGIKEY">0.26</field>
+      </fields>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608634FE</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608CBF27</tstamp>
+    </comp>
+    <comp ref="R11">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608DFA95</tstamp>
+    </comp>
+    <comp ref="R12">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>608E2247</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>CRCW080510K0JNEA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">10k</field>
+        <field name="Desc">RES SMD 10K OHM 5% 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-10KATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>60907BF9</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>CRCW08050000Z0EA</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20035/dcrcwe3.pdf</datasheet>
+      <fields>
+        <field name="Comment">0R</field>
+        <field name="Desc">RES SMD 0 OHM JUMPER 1/8W 0805</field>
+        <field name="PN_DIGIKEY">541-0.0ATR-ND</field>
+        <field name="PRICE_DIGIKEY">0.10</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/AS7254X Sensor/" tstamps="/61548E0F/"/>
+      <tstamp>6090881C</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="1734592-8" part="1734592-8">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">1734592-8</field>
+        <field name="Footprint">TE_1734592-8</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="MANUFACTURER">TE Connectivity</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">2.05mm</field>
+        <field name="PARTREV">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+        <pin num="5" name="5" type="passive"/>
+        <pin num="6" name="6" type="passive"/>
+        <pin num="7" name="7" type="passive"/>
+        <pin num="8" name="8" type="passive"/>
+        <pin num="S1" name="SHIELD" type="passive"/>
+        <pin num="S2" name="SHIELD" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AT25SF041B-SHD-B" part="AT25SF041B-SHD-B">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AT25SF041B-SHD-B</field>
+        <field name="Footprint">SOIC127P790X216-8N</field>
+        <field name="STANDARD">IPC 7351B</field>
+        <field name="PARTREV">F</field>
+        <field name="MANUFACTURER">Dialog Semicondutor</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">2.16mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~CS" type="input"/>
+        <pin num="2" name="SO(I/O1)" type="BiDi"/>
+        <pin num="3" name="~WP~(I/O2)" type="BiDi"/>
+        <pin num="4" name="GND" type="power_in"/>
+        <pin num="5" name="SI(I/O0)" type="BiDi"/>
+        <pin num="6" name="SCK" type="input"/>
+        <pin num="7" name="~HOLD~/~RESET~(I/O3)" type="BiDi"/>
+        <pin num="8" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x07_Female">
+      <description>Generic connector, single row, 01x07, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x07_Female</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="DZAS7265X-PCB-rescue" part="AS72651-BLGT-AS72651">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AS72651-BLGT-AS72651</field>
+        <field name="Footprint">PQFN65P470X450X270-20N</field>
+        <field name="STANDARD">IPC-7351B</field>
+        <field name="MANUFACTURER">AMS</field>
+        <field name="PARTREV">1-04</field>
+      </fields>
+      <pins>
+        <pin num="1" name="SLV1_RESN" type="BiDi"/>
+        <pin num="2" name="RESN" type="input"/>
+        <pin num="3" name="SCK" type="output"/>
+        <pin num="4" name="MOSI" type="BiDi"/>
+        <pin num="5" name="MISO" type="BiDi"/>
+        <pin num="6" name="CSN" type="output"/>
+        <pin num="7" name="NC" type="NotConnected"/>
+        <pin num="8" name="I2C_ENB" type="input"/>
+        <pin num="9" name="SCL_M" type="output"/>
+        <pin num="10" name="SDA_M" type="BiDi"/>
+        <pin num="11" name="RX/SCL_S" type="BiDi"/>
+        <pin num="12" name="TX/SDA_S" type="BiDi"/>
+        <pin num="13" name="INT" type="output"/>
+        <pin num="14" name="VDD2" type="power_in"/>
+        <pin num="15" name="LED_DRV" type="output"/>
+        <pin num="16" name="GND" type="power_in"/>
+        <pin num="17" name="VDD1" type="power_in"/>
+        <pin num="18" name="LED_IND" type="output"/>
+        <pin num="19" name="NC" type="NotConnected"/>
+        <pin num="20" name="SLV2_RESN" type="output"/>
+      </pins>
+    </libpart>
+    <libpart lib="DZAS7265X-PCB-rescue" part="AS72652-BLGT-AS72652">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AS72652-BLGT-AS72652</field>
+        <field name="Footprint">PQFN65P470X450X270-20N</field>
+        <field name="STANDARD">IPC-7351B</field>
+        <field name="MANUFACTURER">AMS</field>
+        <field name="PARTREV">1-04</field>
+      </fields>
+      <pins>
+        <pin num="1" name="NC" type="NotConnected"/>
+        <pin num="2" name="RESN" type="input"/>
+        <pin num="3" name="NC" type="NotConnected"/>
+        <pin num="4" name="NC" type="NotConnected"/>
+        <pin num="5" name="NC" type="NotConnected"/>
+        <pin num="6" name="NC" type="NotConnected"/>
+        <pin num="7" name="NC" type="NotConnected"/>
+        <pin num="8" name="NC" type="NotConnected"/>
+        <pin num="9" name="SCL_S" type="input"/>
+        <pin num="10" name="SDA_S" type="BiDi"/>
+        <pin num="11" name="NC" type="NotConnected"/>
+        <pin num="12" name="NC" type="NotConnected"/>
+        <pin num="13" name="INT" type="output"/>
+        <pin num="14" name="VDD2" type="power_in"/>
+        <pin num="15" name="LED_DRV" type="output"/>
+        <pin num="16" name="GND" type="power_in"/>
+        <pin num="17" name="VDD1" type="power_in"/>
+        <pin num="18" name="LED_IND" type="output"/>
+        <pin num="19" name="NC" type="NotConnected"/>
+        <pin num="20" name="NC" type="NotConnected"/>
+      </pins>
+    </libpart>
+    <libpart lib="DZAS7265X-PCB-rescue" part="AS72653-BLGT-AS72653">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AS72653-BLGT-AS72653</field>
+        <field name="Footprint">PQFN65P470X450X270-20N</field>
+        <field name="STANDARD">IPC-7351B</field>
+        <field name="MANUFACTURER">AMS</field>
+        <field name="PARTREV">1-04</field>
+      </fields>
+      <pins>
+        <pin num="1" name="NC" type="NotConnected"/>
+        <pin num="2" name="RESN" type="input"/>
+        <pin num="3" name="NC" type="NotConnected"/>
+        <pin num="4" name="NC" type="NotConnected"/>
+        <pin num="5" name="NC" type="NotConnected"/>
+        <pin num="6" name="NC" type="NotConnected"/>
+        <pin num="7" name="NC" type="NotConnected"/>
+        <pin num="8" name="NC" type="NotConnected"/>
+        <pin num="9" name="SCL_S" type="input"/>
+        <pin num="10" name="SDA_S" type="BiDi"/>
+        <pin num="11" name="NC" type="NotConnected"/>
+        <pin num="12" name="NC" type="NotConnected"/>
+        <pin num="13" name="INT" type="output"/>
+        <pin num="14" name="VDD2" type="power_in"/>
+        <pin num="15" name="LED_DRV" type="output"/>
+        <pin num="16" name="GND" type="power_in"/>
+        <pin num="17" name="VDD1" type="power_in"/>
+        <pin num="18" name="LED_IND" type="output"/>
+        <pin num="19" name="NC" type="NotConnected"/>
+        <pin num="20" name="NC" type="NotConnected"/>
+      </pins>
+    </libpart>
+    <libpart lib="DZAS7265X-PCB-rescue" part="TPS74633PQWDRBRQ1-Regulator_Linear">
+      <footprints>
+        <fp>WSON*1EP*2x2mm*P0.65mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TPS74633PQWDRBRQ1-Regulator_Linear</field>
+        <field name="Footprint">Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm_ThermalVias</field>
+      </fields>
+      <pins>
+        <pin num="1" name="OUT" type="power_out"/>
+        <pin num="2" name="NC" type="NotConnected"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="EN" type="input"/>
+        <pin num="5" name="PG" type="openCol"/>
+        <pin num="6" name="IN" type="power_in"/>
+        <pin num="7" name="EP" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Ferrite_Bead">
+      <description>Ferrite bead</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+        <fp>*Ferrite*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">FB</field>
+        <field name="Value">Ferrite_Bead</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED">
+      <description>Light emitting diode</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="FT232RQ" part="FT232RQ">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">FT232RQ</field>
+        <field name="Footprint">QFN50P500X500X90-33N</field>
+        <field name="L_NOM">0.4</field>
+        <field name="L_MIN">0.35</field>
+        <field name="D_MAX">5.0</field>
+        <field name="MANUFACTURER">FTDI</field>
+        <field name="STANDARD">IPC 7351B</field>
+        <field name="PIN_COUNT_D">8.0</field>
+        <field name="E2_NOM">3.4</field>
+        <field name="SNAPEDA_PACKAGE_ID">71296</field>
+        <field name="L_MAX">0.45</field>
+        <field name="E_MAX">5.0</field>
+        <field name="PARTREV">2.15</field>
+        <field name="D2_NOM">3.4</field>
+        <field name="A_MAX">0.9</field>
+        <field name="E_MIN">5.0</field>
+        <field name="B_MAX">0.3</field>
+        <field name="B_MIN">0.2</field>
+        <field name="B_NOM">0.25</field>
+        <field name="D_NOM">5.0</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">0.9mm</field>
+        <field name="D_MIN">5.0</field>
+        <field name="E_NOM">5.0</field>
+        <field name="ENOM">0.5</field>
+        <field name="PIN_COUNT_E">8.0</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VCCIO" type="power_in"/>
+        <pin num="2" name="RXD" type="input"/>
+        <pin num="3" name="~RI" type="input"/>
+        <pin num="4" name="GND" type="power_in"/>
+        <pin num="6" name="~DSR" type="input"/>
+        <pin num="7" name="~DCD" type="input"/>
+        <pin num="8" name="~CTS" type="input"/>
+        <pin num="9" name="CBUS4" type="BiDi"/>
+        <pin num="10" name="CBUS2" type="BiDi"/>
+        <pin num="11" name="CBUS3" type="BiDi"/>
+        <pin num="14" name="USBDP" type="BiDi"/>
+        <pin num="15" name="USBDM" type="BiDi"/>
+        <pin num="16" name="3V3OUT" type="output"/>
+        <pin num="17" name="GND" type="power_in"/>
+        <pin num="18" name="~RESET" type="input"/>
+        <pin num="19" name="VCC" type="power_in"/>
+        <pin num="20" name="GND" type="power_in"/>
+        <pin num="21" name="CBUS1" type="BiDi"/>
+        <pin num="22" name="CBUS0" type="BiDi"/>
+        <pin num="24" name="AGND" type="power_in"/>
+        <pin num="26" name="TEST" type="input"/>
+        <pin num="27" name="OSCI" type="input"/>
+        <pin num="28" name="OSCO" type="output"/>
+        <pin num="30" name="TXD" type="output"/>
+        <pin num="31" name="~DTR" type="output"/>
+        <pin num="32" name="~RTS" type="output"/>
+        <pin num="33" name="EXP" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="TC2030-IDC-NL" part="TC2030-IDC-NL">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">TC2030-IDC-NL</field>
+        <field name="Footprint">TAG_TC2030-IDC-NL</field>
+        <field name="PARTREV">MS</field>
+        <field name="MANUFACTURER">Tag-Connect</field>
+        <field name="STANDARD">Manufacturer recommendation</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+        <pin num="5" name="5" type="passive"/>
+        <pin num="6" name="6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_BJT" part="DTC113Z">
+      <description>Digital NPN Transistor, 1k/10k, SOT-23</description>
+      <footprints>
+        <fp>SOT?23*</fp>
+        <fp>SC?59*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">DTC113Z</field>
+      </fields>
+      <pins>
+        <pin num="1" name="B" type="input"/>
+        <pin num="2" name="E" type="passive"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="USB3100-XX-X_REVB" part="USB3100-XX-X_REVB">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">USB3100-XX-X_REVB</field>
+        <field name="Footprint">GCT_USB3100-XX-X_REVB</field>
+        <field name="MANUFACTURER">GCT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VBUS" type="power_in"/>
+        <pin num="2" name="D-" type="BiDi"/>
+        <pin num="3" name="D+" type="BiDi"/>
+        <pin num="4" name="ID" type="BiDi"/>
+        <pin num="5" name="GND" type="power_in"/>
+        <pin num="6" name="SHIELD" type="power_in"/>
+        <pin num="7" name="SHIELD" type="power_in"/>
+        <pin num="8" name="SHIELD" type="power_in"/>
+        <pin num="9" name="SHIELD" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="1734592-8">
+      <uri>C:/Users/deivi/Documents/GitHub/projeto-mestrado/DZAS7265X-PCB/libraries/1734592-8.lib</uri>
+    </library>
+    <library logical="AT25SF041B-SHD-B">
+      <uri>C:/Users/deivi/Documents/GitHub/projeto-mestrado/DZAS7265X-PCB/libraries/AT25SF041B-SHD-B.lib</uri>
+    </library>
+    <library logical="Connector">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Connector.lib</uri>
+    </library>
+    <library logical="DZAS7265X-PCB-rescue">
+      <uri>C:\Users\deivi\Documents\GitHub\projeto-mestrado\DZAS7265X-PCB/DZAS7265X-PCB-rescue.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Device.lib</uri>
+    </library>
+    <library logical="FT232RQ">
+      <uri>C:/Users/deivi/Documents/GitHub/projeto-mestrado/DZAS7265X-PCB/libraries/FT232RQ.lib</uri>
+    </library>
+    <library logical="TC2030-IDC-NL">
+      <uri>C:/Users/deivi/Documents/GitHub/projeto-mestrado/DZAS7265X-PCB/libraries/TC2030-IDC-NL.lib</uri>
+    </library>
+    <library logical="Transistor_BJT">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Transistor_BJT.lib</uri>
+    </library>
+    <library logical="USB3100-XX-X_REVB">
+      <uri>C:/Users/deivi/Documents/GitHub/projeto-mestrado/DZAS7265X-PCB/libraries/USB3100-XX-X_REVB.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+3V3">
+      <node ref="C14" pin="1"/>
+      <node ref="D4" pin="2"/>
+      <node ref="D6" pin="2"/>
+      <node ref="C11" pin="1"/>
+      <node ref="C15" pin="1"/>
+      <node ref="J4" pin="8"/>
+      <node ref="U3" pin="7"/>
+      <node ref="U3" pin="3"/>
+      <node ref="U3" pin="8"/>
+      <node ref="C8" pin="1"/>
+      <node ref="J2" pin="7"/>
+      <node ref="R12" pin="1"/>
+      <node ref="R8" pin="1"/>
+      <node ref="D8" pin="2"/>
+      <node ref="R10" pin="1"/>
+      <node ref="R11" pin="1"/>
+      <node ref="U6" pin="17"/>
+      <node ref="U6" pin="14"/>
+      <node ref="U4" pin="17"/>
+      <node ref="U4" pin="14"/>
+      <node ref="U5" pin="17"/>
+      <node ref="U5" pin="14"/>
+      <node ref="C10" pin="1"/>
+      <node ref="C13" pin="1"/>
+      <node ref="C12" pin="1"/>
+      <node ref="R2" pin="1"/>
+      <node ref="R1" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="U2" pin="1"/>
+      <node ref="R3" pin="1"/>
+      <node ref="R4" pin="1"/>
+    </net>
+    <net code="2" name="TX-FT232">
+      <node ref="U1" pin="30"/>
+      <node ref="R3" pin="2"/>
+      <node ref="U4" pin="11"/>
+    </net>
+    <net code="3" name="RX-FT232">
+      <node ref="U1" pin="2"/>
+      <node ref="U4" pin="12"/>
+      <node ref="R4" pin="2"/>
+    </net>
+    <net code="4" name="Net-(U2-Pad2)">
+      <node ref="U2" pin="2"/>
+    </net>
+    <net code="5" name="Net-(U2-Pad5)">
+      <node ref="U2" pin="5"/>
+    </net>
+    <net code="6" name="LED-TX">
+      <node ref="U1" pin="22"/>
+      <node ref="D1" pin="1"/>
+    </net>
+    <net code="7" name="LED-RX">
+      <node ref="D2" pin="1"/>
+      <node ref="U1" pin="21"/>
+    </net>
+    <net code="8" name="PWREN#">
+      <node ref="U1" pin="11"/>
+      <node ref="R7" pin="2"/>
+    </net>
+    <net code="9" name="SDA">
+      <node ref="U6" pin="10"/>
+      <node ref="R1" pin="2"/>
+      <node ref="U5" pin="10"/>
+      <node ref="U4" pin="10"/>
+    </net>
+    <net code="10" name="SCL">
+      <node ref="R2" pin="2"/>
+      <node ref="U5" pin="9"/>
+      <node ref="U4" pin="9"/>
+      <node ref="U6" pin="9"/>
+    </net>
+    <net code="11" name="GND">
+      <node ref="C11" pin="2"/>
+      <node ref="C3" pin="2"/>
+      <node ref="U3" pin="4"/>
+      <node ref="C8" pin="2"/>
+      <node ref="J2" pin="1"/>
+      <node ref="J1" pin="9"/>
+      <node ref="C9" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="R9" pin="2"/>
+      <node ref="C10" pin="2"/>
+      <node ref="C12" pin="2"/>
+      <node ref="C13" pin="2"/>
+      <node ref="U6" pin="16"/>
+      <node ref="U4" pin="16"/>
+      <node ref="U5" pin="16"/>
+      <node ref="J1" pin="7"/>
+      <node ref="J1" pin="4"/>
+      <node ref="C14" pin="2"/>
+      <node ref="C15" pin="2"/>
+      <node ref="J1" pin="8"/>
+      <node ref="J1" pin="6"/>
+      <node ref="J1" pin="5"/>
+      <node ref="U2" pin="3"/>
+      <node ref="U2" pin="7"/>
+      <node ref="C4" pin="2"/>
+      <node ref="J4" pin="1"/>
+      <node ref="U1" pin="4"/>
+      <node ref="U1" pin="17"/>
+      <node ref="U1" pin="20"/>
+      <node ref="U1" pin="24"/>
+      <node ref="U1" pin="26"/>
+      <node ref="C6" pin="2"/>
+      <node ref="J3" pin="6"/>
+      <node ref="C7" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="C2" pin="2"/>
+      <node ref="Q1" pin="2"/>
+    </net>
+    <net code="12" name="Net-(FB1-Pad2)">
+      <node ref="J1" pin="1"/>
+      <node ref="FB1" pin="2"/>
+    </net>
+    <net code="13" name="D+">
+      <node ref="J1" pin="2"/>
+      <node ref="U1" pin="14"/>
+    </net>
+    <net code="14" name="D-">
+      <node ref="J1" pin="3"/>
+      <node ref="U1" pin="15"/>
+    </net>
+    <net code="15" name="+5V">
+      <node ref="U1" pin="18"/>
+      <node ref="C1" pin="1"/>
+      <node ref="U1" pin="19"/>
+      <node ref="U2" pin="4"/>
+      <node ref="C4" pin="1"/>
+      <node ref="U2" pin="6"/>
+      <node ref="R6" pin="1"/>
+      <node ref="R5" pin="1"/>
+      <node ref="C7" pin="1"/>
+      <node ref="C6" pin="1"/>
+      <node ref="R15" pin="1"/>
+      <node ref="R7" pin="1"/>
+      <node ref="FB1" pin="1"/>
+      <node ref="R14" pin="1"/>
+      <node ref="R13" pin="1"/>
+      <node ref="C3" pin="1"/>
+    </net>
+    <net code="16" name="Net-(U1-Pad32)">
+      <node ref="U1" pin="32"/>
+    </net>
+    <net code="17" name="Net-(U1-Pad27)">
+      <node ref="U1" pin="27"/>
+    </net>
+    <net code="18" name="Net-(U1-Pad28)">
+      <node ref="U1" pin="28"/>
+    </net>
+    <net code="19" name="Net-(U1-Pad31)">
+      <node ref="U1" pin="31"/>
+    </net>
+    <net code="20" name="Net-(U1-Pad3)">
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="21" name="Net-(U1-Pad6)">
+      <node ref="U1" pin="6"/>
+    </net>
+    <net code="22" name="Net-(U1-Pad7)">
+      <node ref="U1" pin="7"/>
+    </net>
+    <net code="23" name="Net-(U1-Pad8)">
+      <node ref="U1" pin="8"/>
+    </net>
+    <net code="24" name="Net-(U1-Pad10)">
+      <node ref="U1" pin="10"/>
+    </net>
+    <net code="25" name="Net-(U1-Pad9)">
+      <node ref="U1" pin="9"/>
+    </net>
+    <net code="26" name="Net-(U1-Pad33)">
+      <node ref="U1" pin="33"/>
+    </net>
+    <net code="27" name="Net-(D2-Pad2)">
+      <node ref="R6" pin="2"/>
+      <node ref="D2" pin="2"/>
+    </net>
+    <net code="28" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2"/>
+      <node ref="R5" pin="2"/>
+    </net>
+    <net code="29" name="Net-(C2-Pad1)">
+      <node ref="U1" pin="16"/>
+      <node ref="U1" pin="1"/>
+      <node ref="C2" pin="1"/>
+    </net>
+    <net code="30" name="MISO">
+      <node ref="J4" pin="6"/>
+      <node ref="J2" pin="5"/>
+      <node ref="J3" pin="1"/>
+      <node ref="U4" pin="5"/>
+      <node ref="U3" pin="2"/>
+    </net>
+    <net code="31" name="CSN">
+      <node ref="J3" pin="5"/>
+      <node ref="J2" pin="6"/>
+      <node ref="U4" pin="6"/>
+      <node ref="J4" pin="7"/>
+      <node ref="U3" pin="1"/>
+    </net>
+    <net code="32" name="Net-(J4-PadS1)">
+      <node ref="J4" pin="S2"/>
+      <node ref="J4" pin="S1"/>
+    </net>
+    <net code="33" name="Net-(FB2-Pad2)">
+      <node ref="FB2" pin="2"/>
+      <node ref="J3" pin="2"/>
+    </net>
+    <net code="34" name="SCK">
+      <node ref="J3" pin="3"/>
+      <node ref="U4" pin="3"/>
+      <node ref="J4" pin="5"/>
+      <node ref="J2" pin="4"/>
+      <node ref="U3" pin="6"/>
+    </net>
+    <net code="35" name="MOSI">
+      <node ref="U4" pin="4"/>
+      <node ref="J2" pin="3"/>
+      <node ref="J4" pin="4"/>
+      <node ref="U3" pin="5"/>
+      <node ref="J3" pin="4"/>
+    </net>
+    <net code="36" name="RESN">
+      <node ref="J4" pin="3"/>
+      <node ref="U4" pin="2"/>
+      <node ref="J2" pin="2"/>
+      <node ref="Q1" pin="3"/>
+      <node ref="R10" pin="2"/>
+    </net>
+    <net code="37" name="Net-(J4-Pad2)">
+      <node ref="J4" pin="2"/>
+    </net>
+    <net code="38" name="Net-(C9-Pad1)">
+      <node ref="Q1" pin="1"/>
+      <node ref="C9" pin="1"/>
+      <node ref="FB2" pin="1"/>
+    </net>
+    <net code="39" name="Net-(D4-Pad1)">
+      <node ref="D4" pin="1"/>
+      <node ref="U4" pin="18"/>
+    </net>
+    <net code="40" name="Net-(D3-Pad1)">
+      <node ref="U4" pin="15"/>
+      <node ref="D3" pin="1"/>
+    </net>
+    <net code="41" name="Net-(D3-Pad2)">
+      <node ref="R13" pin="2"/>
+      <node ref="D3" pin="2"/>
+    </net>
+    <net code="42" name="Net-(D6-Pad1)">
+      <node ref="D6" pin="1"/>
+      <node ref="U5" pin="18"/>
+    </net>
+    <net code="43" name="Net-(D5-Pad1)">
+      <node ref="U5" pin="15"/>
+      <node ref="D5" pin="1"/>
+    </net>
+    <net code="44" name="Net-(D5-Pad2)">
+      <node ref="R14" pin="2"/>
+      <node ref="D5" pin="2"/>
+    </net>
+    <net code="45" name="SLV2_RESN">
+      <node ref="R12" pin="2"/>
+      <node ref="U6" pin="2"/>
+      <node ref="U4" pin="20"/>
+    </net>
+    <net code="46" name="SLV1_RESN">
+      <node ref="R11" pin="2"/>
+      <node ref="U5" pin="2"/>
+      <node ref="U4" pin="1"/>
+    </net>
+    <net code="47" name="INT">
+      <node ref="U4" pin="13"/>
+    </net>
+    <net code="48" name="Net-(R8-Pad2)">
+      <node ref="R9" pin="1"/>
+      <node ref="R8" pin="2"/>
+      <node ref="U4" pin="8"/>
+    </net>
+    <net code="49" name="Net-(D8-Pad1)">
+      <node ref="U6" pin="18"/>
+      <node ref="D8" pin="1"/>
+    </net>
+    <net code="50" name="Net-(D7-Pad1)">
+      <node ref="U6" pin="15"/>
+      <node ref="D7" pin="1"/>
+    </net>
+    <net code="51" name="Net-(D7-Pad2)">
+      <node ref="R15" pin="2"/>
+      <node ref="D7" pin="2"/>
+    </net>
+    <net code="52" name="Net-(U6-Pad13)">
+      <node ref="U6" pin="13"/>
+    </net>
+    <net code="53" name="Net-(U6-Pad12)">
+      <node ref="U6" pin="12"/>
+    </net>
+    <net code="54" name="Net-(U6-Pad11)">
+      <node ref="U6" pin="11"/>
+    </net>
+    <net code="55" name="Net-(U6-Pad19)">
+      <node ref="U6" pin="19"/>
+    </net>
+    <net code="56" name="Net-(U6-Pad1)">
+      <node ref="U6" pin="1"/>
+    </net>
+    <net code="57" name="Net-(U5-Pad8)">
+      <node ref="U5" pin="8"/>
+    </net>
+    <net code="58" name="Net-(U5-Pad7)">
+      <node ref="U5" pin="7"/>
+    </net>
+    <net code="59" name="Net-(U5-Pad6)">
+      <node ref="U5" pin="6"/>
+    </net>
+    <net code="60" name="Net-(U5-Pad5)">
+      <node ref="U5" pin="5"/>
+    </net>
+    <net code="61" name="Net-(U5-Pad4)">
+      <node ref="U5" pin="4"/>
+    </net>
+    <net code="62" name="Net-(U6-Pad8)">
+      <node ref="U6" pin="8"/>
+    </net>
+    <net code="63" name="Net-(U5-Pad3)">
+      <node ref="U5" pin="3"/>
+    </net>
+    <net code="64" name="Net-(U6-Pad7)">
+      <node ref="U6" pin="7"/>
+    </net>
+    <net code="65" name="Net-(U6-Pad6)">
+      <node ref="U6" pin="6"/>
+    </net>
+    <net code="66" name="Net-(U6-Pad5)">
+      <node ref="U6" pin="5"/>
+    </net>
+    <net code="67" name="Net-(U6-Pad4)">
+      <node ref="U6" pin="4"/>
+    </net>
+    <net code="68" name="Net-(U6-Pad3)">
+      <node ref="U6" pin="3"/>
+    </net>
+    <net code="69" name="Net-(U6-Pad20)">
+      <node ref="U6" pin="20"/>
+    </net>
+    <net code="70" name="Net-(U4-Pad19)">
+      <node ref="U4" pin="19"/>
+    </net>
+    <net code="71" name="Net-(U5-Pad13)">
+      <node ref="U5" pin="13"/>
+    </net>
+    <net code="72" name="Net-(U5-Pad20)">
+      <node ref="U5" pin="20"/>
+    </net>
+    <net code="73" name="Net-(U5-Pad19)">
+      <node ref="U5" pin="19"/>
+    </net>
+    <net code="74" name="Net-(U5-Pad12)">
+      <node ref="U5" pin="12"/>
+    </net>
+    <net code="75" name="Net-(U5-Pad11)">
+      <node ref="U5" pin="11"/>
+    </net>
+    <net code="76" name="Net-(U5-Pad1)">
+      <node ref="U5" pin="1"/>
+    </net>
+    <net code="77" name="Net-(U4-Pad7)">
+      <node ref="U4" pin="7"/>
+    </net>
+  </nets>
+</export>
