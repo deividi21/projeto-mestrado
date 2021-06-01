@@ -2,6 +2,7 @@ library(tidyverse)
 library(neuralnet)
 library(randomForest)
 library(yardstick)
+library(caTools)
 
 ####Importando Dados####
 sample_21195 <- read_delim("dados/21195_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
@@ -15,7 +16,6 @@ sample_21202 <- read_delim("dados/21202_2.csv",";", escape_double = FALSE, trim_
 sample_21210 <- read_delim("dados/21210_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
 sample_21227 <- read_delim("dados/21227_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
 sample_sadio <- read_delim("dados/sadio_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
-
 
 ####Selecionando Colunas de Interesse####
 sample_21195.subset <- sample_21195[20:37]
@@ -100,47 +100,64 @@ wheat_dataset <- wheat_dataset %>% rename(R = 'Cal. R (610nm)',
 
 ####Rede Neural####
 
-teste <- scale(wheat_dataset[2:20])
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
 
-teste <- replace(teste, is.na(teste), 0)
+nn <- as.data.frame(lapply(wheat_dataset[2:20], min_max_norm))
 
-nn=neuralnet(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,data=wheat_dataset, hidden=3,act.fct = "logistic",
-             linear.output = FALSE, stepmax=1e6)
+nn <- as.data.frame(replace(nn, is.na(nn), 0))
 
-plot(nn)
+nn.sample <- sample.split(nn$don, SplitRatio = .70)
+nn.train <- subset(nn, nn.sample == TRUE)
+nn.test <- subset(nn, nn.sample == FALSE)
 
-print(nn)
+nn.model <- neuralnet(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
+                      data=nn.train,
+                      hidden=c(5:3),
+                      rep = 3)
+
+nn.model$result.matrix
+
+plot(nn.model, rep = "best")
+
+nn.results <- compute(nn.model, nn.test)
+
+nn.final <- data.frame(actual = nn.test$don, prediction = nn.results$net.result)
+nn.final
+
+nn.final.rounded <- as.data.frame(sapply(nn.final, round, digits=0))
+
+attach(nn.final.rounded)
+table(actual,prediction)
 
 ####Randon Forest####
-
-write.csv(wheat_dataset,"C:\\Users\\deivi\\Documents\\GitHub\\projeto-mestrado\\r-knn-wheat-samples\\wheat_dataset.csv", row.names = FALSE)
-
 
 set.seed(8675309)
 
 rf <- as.data.frame(scale(wheat_dataset[2:20]))
 
-rf <- as.data.frame(replace(rf.data, is.na(rf.data), 0))
+rf <- as.data.frame(replace(rf, is.na(rf), 0))
 
-sample.rf <- sample.split(rf$don, SplitRatio = .90)
-train.rf <- subset(rf, sample == TRUE)
-test.rf <- subset(rf, sample == FALSE)
+rf.sample <- sample.split(rf$don, SplitRatio = .90)
+rf.train <- subset(rf, sample.rf == TRUE)
+rf.test <- subset(rf, sample.rf == FALSE)
 
-model.rf <- randomForest(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
-                         data = train.rf,
+rf.model <- randomForest(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
+                         data = rf.train,
                          importance = TRUE,
                          proximity = TRUE,
                          keep.forest=TRUE)
-print(model.rf)
+print(rf.model)
 
-y_hat <- predict(model.rf, test.rf)
+y_hat <- predict(rf.model, rf.test)
 
-test.rf_scored <- as_tibble(cbind(test.rf, y_hat))
+test.rf_scored <- as_tibble(cbind(rf.test, y_hat))
 glimpse(test.rf_scored)
 RMSE_rf_TEST <- yardstick::rmse(test.rf_scored, truth=don, estimate=y_hat)
 RMSE_rf_TEST
 
-plot(model.rf)
+plot(rf.model)
 
 ####KNN####
 set.seed(101)
