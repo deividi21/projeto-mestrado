@@ -1,8 +1,17 @@
 library(tidyverse)
-library(neuralnet)
-library(randomForest)
 library(yardstick)
 library(caTools)
+library(caret)
+
+library(tensorflow)
+library(keras)
+library(tfdatasets)
+
+library(neuralnet)
+library(randomForest)
+
+
+
 
 ####Importando Dados####
 sample_21195 <- read_delim("dados/21195_2.csv",";", escape_double = FALSE, trim_ws = TRUE)
@@ -108,14 +117,143 @@ nn <- as.data.frame(lapply(wheat_dataset[2:20], min_max_norm))
 
 nn <- as.data.frame(replace(nn, is.na(nn), 0))
 
+nn <- mutate(nn,wheat_dataset$label)
+
 nn.sample <- sample.split(nn$don, SplitRatio = .70)
-nn.train <- subset(nn, nn.sample == TRUE)
-nn.test <- subset(nn, nn.sample == FALSE)
+nn.train <- as_tibble(subset(nn, nn.sample == TRUE) %>% select(-A,-L))
+nn.test <- as_tibble(subset(nn, nn.sample == FALSE) %>% select(-A,-L))
+
+write.csv(nn,"C:\\Users\\Deividi\\Documents\\dataset_normalizado.csv", row.names = TRUE)
+
+
+spec <- feature_spec(nn.train, don ~ . ) %>% 
+  step_numeric_column(all_numeric(), normalizer_fn = scaler_standard()) %>% 
+  fit()
+
+spec
+
+
+layer <- layer_dense_features(
+  feature_columns = dense_features(spec), 
+  dtype = tf$float32
+)
+layer(nn.train)
+
+
+
+input <- layer_input_from_dataset(nn.train %>% select(-don))
+
+output <- input %>% 
+  layer_dense_features(dense_features(spec)) %>% 
+  layer_dense(units = 64, activation = "relu") %>%
+  layer_dense(units = 64, activation = "relu") %>%
+  layer_dense(units = 64, activation = "relu") %>%
+  layer_dense(units = 64, activation = "relu") %>%
+  layer_dense(units = 64, activation = "relu") %>%
+  layer_dense(units = 64, activation = "relu") %>%
+  layer_dense(units = 64, activation = "relu") %>%
+  layer_dense(units = 10, activation = "softmax") %>%
+  layer_dense(units = 1)
+
+model <- keras_model(input, output)
+
+summary(model)
+
+model %>% 
+  compile(
+    loss = "mse",
+    optimizer = optimizer_rmsprop(),
+    metrics = list("mean_absolute_error")
+  )
+
+
+build_model <- function() {
+  input <- layer_input_from_dataset(nn.train %>% select(-don))
+  
+  output <- input %>% 
+    layer_dense_features(dense_features(spec)) %>% 
+    layer_dense(units = 64, activation = "relu") %>%
+    layer_dense(units = 64, activation = "relu") %>%
+    layer_dense(units = 64, activation = "relu") %>%
+    layer_dense(units = 64, activation = "relu") %>%
+    layer_dense(units = 64, activation = "relu") %>%
+    layer_dense(units = 64, activation = "relu") %>%
+    layer_dense(units = 64, activation = "relu") %>%
+    layer_dense(units = 10, activation = "softmax") %>%
+    layer_dense(units = 1) 
+  
+  model <- keras_model(input, output)
+  
+  model %>% 
+    compile(
+      loss = "mse",
+      optimizer = optimizer_rmsprop(),
+      metrics = list("mean_absolute_error")
+    )
+  
+  model
+}
+
+
+# Display training progress by printing a single dot for each completed epoch.
+print_dot_callback <- callback_lambda(
+  on_epoch_end = function(epoch, logs) {
+    if (epoch %% 80 == 0) cat("\n")
+    cat(".")
+  }
+)
+
+model <- build_model()
+
+history <- model %>% fit(
+  x = nn.train %>% select(-don),
+  y = nn.train$don,
+  epochs = 100,
+  validation_split = 0.2,
+  verbose = 0,
+  batch_size=128,
+  callbacks = list(print_dot_callback)
+)
+
+
+plot(history)
+
+
+c(loss, mae) %<-% (model %>% evaluate(nn.test %>% select(-don), nn.test$don, verbose = 0))
+
+paste0("Mean absolute error on test set: ", sprintf("%.2f", mae * 1000))
+
+test_predictions <- model %>% predict(nn.test %>% select(-don))
+
+
+fr <- tibble(
+  prediction = sapply(test_predictions[ , 1], round, digits=1), 
+  actual = sapply(nn.test$don, round, digits=1), 
+)
+
+factor(fr$prediction)
+
+l <- c(0.0,0.1,0.2,0.3,0.4,0.5,0.7,0.8,0.9,1.0)
+
+confusionMatrix(factor(fr$prediction, levels = l), factor(fr$actual, levels = l), positive = NULL, dnn = c("Prediction", "Reference"))
+
+
+
+confusionMatrix(factor(fr$prediction), factor(fr$actual), positive = NULL, dnn = c("Prediction", "Reference"))
+
+
+
+
+time.start=proc.time()[[3]]
 
 nn.model <- neuralnet(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
                       data=nn.train,
-                      hidden=c(5:3),
-                      rep = 3)
+                      hidden=c(5:1),
+                      rep = 3,
+                      stepmax=1e6)
+
+time.end=proc.time()[[3]]
+time.end-time.start
 
 nn.model$result.matrix
 
@@ -126,7 +264,7 @@ nn.results <- compute(nn.model, nn.test)
 nn.final <- data.frame(actual = nn.test$don, prediction = nn.results$net.result)
 nn.final
 
-nn.final.rounded <- as.data.frame(sapply(nn.final, round, digits=0))
+nn.final.rounded <- as.data.frame(sapply(nn.final, round, digits=1))
 
 attach(nn.final.rounded)
 table(actual,prediction)
@@ -142,6 +280,7 @@ rf <- as.data.frame(replace(rf, is.na(rf), 0))
 rf.sample <- sample.split(rf$don, SplitRatio = .90)
 rf.train <- subset(rf, sample.rf == TRUE)
 rf.test <- subset(rf, sample.rf == FALSE)
+
 
 rf.model <- randomForest(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
                          data = rf.train,
