@@ -8,9 +8,10 @@ library(keras)
 library(tfdatasets)
 
 library(neuralnet)
+library(varhandle)
 library(randomForest)
-
-
+library(randomForestExplainer)
+library(class)
 
 
 ####Importando Dados####
@@ -87,24 +88,24 @@ wheat_dataset <- merge(wheat_dataset,sample_21210.subset,all.x = TRUE, all.y = T
 wheat_dataset <- merge(wheat_dataset,sample_21227.subset,all.x = TRUE, all.y = TRUE)
 wheat_dataset <- merge(wheat_dataset,sample_sadio.subset,all.x = TRUE, all.y = TRUE)
 
-wheat_dataset <- wheat_dataset %>% rename(R = 'Cal. R (610nm)',
-                                          S = 'Cal. S (680nm)',
-                                          T = 'Cal. T (730nm)',
-                                          U = 'Cal. U (760nm)',
-                                          V = 'Cal. V (810nm)',
-                                          W = 'Cal. W (860nm)',
-                                          G = 'Cal. G (560nm)',
-                                          H = 'Cal. H (585nm)',
-                                          I = 'Cal. I (645nm)',
-                                          J = 'Cal. J (705nm)',
-                                          K = 'Cal. K (900nm)',
-                                          L = 'Cal. L (940nm)',
-                                          A = 'Cal. A (410nm)',
-                                          B = 'Cal. B (435nm)',
-                                          C = 'Cal. C (460nm)',
-                                          D = 'Cal. D (485nm)',
-                                          E = 'Cal. E (510nm)',
-                                          F = 'Cal. F (535nm)')
+wheat_dataset <- wheat_dataset %>% rename(R_610 = 'Cal. R (610nm)',
+                                          S_680 = 'Cal. S (680nm)',
+                                          T_730 = 'Cal. T (730nm)',
+                                          U_760 = 'Cal. U (760nm)',
+                                          V_810 = 'Cal. V (810nm)',
+                                          W_860 = 'Cal. W (860nm)',
+                                          G_560 = 'Cal. G (560nm)',
+                                          H_585 = 'Cal. H (585nm)',
+                                          I_645 = 'Cal. I (645nm)',
+                                          J_705 = 'Cal. J (705nm)',
+                                          K_900 = 'Cal. K (900nm)',
+                                          L_940 = 'Cal. L (940nm)',
+                                          A_410 = 'Cal. A (410nm)',
+                                          B_435 = 'Cal. B (435nm)',
+                                          C_460 = 'Cal. C (460nm)',
+                                          D_485 = 'Cal. D (485nm)',
+                                          E_510 = 'Cal. E (510nm)',
+                                          F_535 = 'Cal. F (535nm)')
 
 
 ####Rede Neural####
@@ -113,17 +114,32 @@ min_max_norm <- function(x) {
   (x - min(x)) / (max(x) - min(x))
 }
 
-nn <- as.data.frame(lapply(wheat_dataset[2:20], min_max_norm))
 
-nn <- as.data.frame(replace(nn, is.na(nn), 0))
+#Regressao
+nn <- as.data.frame(lapply(wheat_dataset %>% select(-id,-A_410,-L_940,-label), min_max_norm))
 
-nn <- mutate(nn,wheat_dataset$label)
 
+#Escolha binaria
+nn <- as.data.frame(lapply(wheat_dataset %>% select(-id,-A_410,-L_940,-label), min_max_norm))
+nn$don <- ceiling(nn$don)
+
+head(nn)
+
+#nn <- mutate(nn,wheat_dataset$label)
+
+#Separando dataset
+set.seed(42)
 nn.sample <- sample.split(nn$don, SplitRatio = .70)
-nn.train <- as_tibble(subset(nn, nn.sample == TRUE) %>% select(-A,-L))
-nn.test <- as_tibble(subset(nn, nn.sample == FALSE) %>% select(-A,-L))
+nn.train <- as_tibble(subset(nn, nn.sample == TRUE))
+nn.test <- as_tibble(subset(nn, nn.sample == FALSE))
 
-write.csv(nn,"C:\\Users\\Deividi\\Documents\\dataset_normalizado.csv", row.names = TRUE)
+
+#Deixando dataset completo em um unico banco
+#nn.train <- as_tibble(nn %>% select(-A_410,-L_940))
+#rows <- sample(nrow(nn.train))
+#nn.train <- nn.train[rows, ]
+
+#write.csv(nn,"C:\\Users\\Deividi\\Documents\\dataset_normalizado.csv", row.names = TRUE)
 
 
 spec <- feature_spec(nn.train, don ~ . ) %>% 
@@ -150,9 +166,7 @@ output <- input %>%
   layer_dense(units = 64, activation = "relu") %>%
   layer_dense(units = 64, activation = "relu") %>%
   layer_dense(units = 64, activation = "relu") %>%
-  layer_dense(units = 64, activation = "relu") %>%
-  layer_dense(units = 64, activation = "relu") %>%
-  layer_dense(units = 10, activation = "softmax") %>%
+  layer_dense(units = 9, activation = "softmax") %>%
   layer_dense(units = 1)
 
 model <- keras_model(input, output)
@@ -177,10 +191,8 @@ build_model <- function() {
     layer_dense(units = 64, activation = "relu") %>%
     layer_dense(units = 64, activation = "relu") %>%
     layer_dense(units = 64, activation = "relu") %>%
-    layer_dense(units = 64, activation = "relu") %>%
-    layer_dense(units = 64, activation = "relu") %>%
-    layer_dense(units = 10, activation = "softmax") %>%
-    layer_dense(units = 1) 
+    layer_dense(units = 9, activation = "softmax") %>%
+    layer_dense(units = 1)
   
   model <- keras_model(input, output)
   
@@ -209,125 +221,204 @@ history <- model %>% fit(
   x = nn.train %>% select(-don),
   y = nn.train$don,
   epochs = 100,
-  validation_split = 0.2,
   verbose = 0,
-  batch_size=128,
-  callbacks = list(print_dot_callback)
+  batch_size=15,
+  shuffle=TRUE
 )
-
 
 plot(history)
 
-
 c(loss, mae) %<-% (model %>% evaluate(nn.test %>% select(-don), nn.test$don, verbose = 0))
 
-paste0("Mean absolute error on test set: ", sprintf("%.2f", mae * 1000))
+paste0("Mean absolute error on test set: ", sprintf("%.2f", mae * 100))
 
-test_predictions <- model %>% predict(nn.test %>% select(-don))
+test_predictions <- model %>% predict(x=(nn.test %>% select(-don)), batch_size=20, verbose=2)
+
+#Decisao
+fr <- tibble(
+  prediction = sapply(test_predictions[ , 1], round, digits=0), 
+  actual = sapply(nn.test$don, round, digits=0),
+)
+factor(fr$prediction)
+confusionMatrix(factor(fr$prediction), factor(fr$actual), positive = NULL, dnn = c("Prediction", "Reference"))
 
 
+#Regressao
 fr <- tibble(
   prediction = sapply(test_predictions[ , 1], round, digits=1), 
   actual = sapply(nn.test$don, round, digits=1), 
 )
-
 factor(fr$prediction)
-
 l <- c(0.0,0.1,0.2,0.3,0.4,0.5,0.7,0.8,0.9,1.0)
-
 confusionMatrix(factor(fr$prediction, levels = l), factor(fr$actual, levels = l), positive = NULL, dnn = c("Prediction", "Reference"))
 
 
-
-confusionMatrix(factor(fr$prediction), factor(fr$actual), positive = NULL, dnn = c("Prediction", "Reference"))
-
-
-
-
-time.start=proc.time()[[3]]
-
-nn.model <- neuralnet(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
-                      data=nn.train,
-                      hidden=c(5:1),
-                      rep = 3,
-                      stepmax=1e6)
-
-time.end=proc.time()[[3]]
-time.end-time.start
-
-nn.model$result.matrix
-
-plot(nn.model, rep = "best")
-
-nn.results <- compute(nn.model, nn.test)
-
-nn.final <- data.frame(actual = nn.test$don, prediction = nn.results$net.result)
-nn.final
-
-nn.final.rounded <- as.data.frame(sapply(nn.final, round, digits=1))
-
-attach(nn.final.rounded)
-table(actual,prediction)
-
-####Randon Forest####
-
+####Randon Forest Classificacao####
 set.seed(8675309)
 
-rf <- as.data.frame(scale(wheat_dataset[2:20]))
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
 
-rf <- as.data.frame(replace(rf, is.na(rf), 0))
+rf <- as.data.frame(lapply(wheat_dataset %>% select(-id,-A_410,-L_940,-label,-don), min_max_norm))
 
-rf.sample <- sample.split(rf$don, SplitRatio = .90)
-rf.train <- subset(rf, sample.rf == TRUE)
-rf.test <- subset(rf, sample.rf == FALSE)
+wdon <- sapply(wheat_dataset$don, as.character)
+
+rf <- as_tibble(mutate(rf, don = wdon))
+
+rf$don <-factor(rf$don, levels = c('0','307','483','799','1508','1788','1943','2009','2113'))
+
+head(rf)
+
+rf.sample <- sample.split(rf$don, SplitRatio = .70)
+rf.train <- subset(rf, rf.sample == TRUE)
+rf.test <- subset(rf, rf.sample == FALSE)
+
+prop.table(table(rf.train$don))
 
 
-rf.model <- randomForest(don~R+S+T+U+V+W+G+H+I+J+K+L+A+B+C+D+E+F,
-                         data = rf.train,
-                         importance = TRUE,
-                         proximity = TRUE,
-                         keep.forest=TRUE)
-print(rf.model)
-
-y_hat <- predict(rf.model, rf.test)
-
-test.rf_scored <- as_tibble(cbind(rf.test, y_hat))
-glimpse(test.rf_scored)
-RMSE_rf_TEST <- yardstick::rmse(test.rf_scored, truth=don, estimate=y_hat)
-RMSE_rf_TEST
+rf.model <- randomForest(x = rf.train[,-17],
+                         y = rf.train$don,
+                         xtest = rf.test[,-17],
+                         ytest = rf.test$don,
+                         ntree = 150,
+                         replace = TRUE)
 
 plot(rf.model)
 
-####KNN####
+rf.model.predicted <- as_tibble(rf.model$test$predicted)
+
+confusionMatrix(factor(rf.model$test$predicted), factor(rf.test$don), dnn = c("Prediction", "Reference"))
+
+
+varImpPlot(rf.model)
+
+####Randon Forest Binario####
+
+set.seed(8675309)
+
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+rf <- as.data.frame(lapply(wheat_dataset %>% select(-id,-A_410,-L_940,-label), min_max_norm))
+
+rf$don <- ceiling(rf$don)
+rf$don <- replace(rf$don, rf$don==1, "contamidado")
+rf$don <- replace(rf$don, rf$don==0, "sadio")
+rf$don <- factor(rf$don, levels = c('sadio','contamidado'))
+
+head(rf)
+
+rf.sample <- sample.split(rf$don, SplitRatio = .70)
+rf.train <- subset(rf, rf.sample == TRUE)
+rf.test <- subset(rf, rf.sample == FALSE)
+
+prop.table(table(rf.train$don))
+
+
+rf.model <- randomForest(x = rf.train[,-17],
+                         y = rf.train$don,
+                         xtest = rf.test[,-17],
+                         ytest = rf.test$don,
+                         ntree = 150,
+                         replace = TRUE)
+
+plot(rf.model)
+
+rf.model.predicted <- as_tibble(rf.model$test$predicted)
+
+confusionMatrix(factor(rf.model$test$predicted), factor(rf.test$don), dnn = c("Prediction", "Reference"))
+
+varImpPlot(rf.model)
+
+
+
+####KNN - Classificacao####
 set.seed(101)
 
-knn <- wheat_dataset[2:20]
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+knn <- as.data.frame(lapply(wheat_dataset %>% select(-id,-A_410 ,-L_940,-label,-don), min_max_norm))
+
+knn <- mutate(knn, don=wheat_dataset$don)
 
 head(knn)
 
 sample.knn <- sample.split(knn$don, SplitRatio = .70)
-train.knn <- subset(knn, sample == TRUE)
-test.knn <- subset(knn, sample == FALSE)
+train.knn <- subset(knn, sample.knn == TRUE)
+test.knn <- subset(knn, sample.knn == FALSE)
 
-predicted.samples.knn <- knn(train.knn[1:18],test.knn[1:18],train.knn$don,k=11)
+predicted.samples.knn <- knn(train.knn[1:16],test.knn[1:16],train.knn$don,k=7)
 error.df.knn <- mean(test.knn$don != predicted.samples.knn)
 error.df.knn
 table(predicted.samples.knn,test.knn$don)
 
+
+confusionMatrix(factor(predicted.samples.knn), factor(test.knn$don), dnn = c("Prediction", "Reference"))
+
+
 #Teste para k de 1 a 30
-media <- c(1:30)
+media_erro <- c(1:30)
 
 for (i in 1:30) {
-  predicted.samples.knn <- knn(train.knn[1:18],test.knn[1:18],train.knn$don,k=i)
-  media[i] <- mean(test.knn$don != predicted.samples.knn)
+  predicted.samples.knn <- knn(train.knn[1:16],test.knn[1:16],train.knn$don,k=i)
+  media_erro[i] <- mean(test.knn$don != predicted.samples.knn)
 }
 
 k.values <- 1:30
 
-error.df <- data.frame(media,k.values)
+error.df <- data.frame(media_erro,k.values)
+
+ggplot(error.df,aes(x=k.values,y=media_erro)) + geom_point()+ geom_line(lty="dotted",color='red')
+
+####KNN Binario####
+set.seed(101)
+
+min_max_norm <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+knn <- as.data.frame(lapply(wheat_dataset %>% select(-id,-A_410 ,-L_940,-label), min_max_norm))
+
+knn$don <- ceiling(knn$don)
+knn$don <- replace(knn$don, knn$don==1, "contamidado")
+knn$don <- replace(knn$don, knn$don==0, "sadio")
+knn$don <- factor(knn$don, levels = c('sadio','contamidado'))
 
 
-ggplot(error.df,aes(x=k.values,y=media)) + geom_point()+ geom_line(lty="dotted",color='red')
+head(knn)
+
+sample.knn <- sample.split(knn$don, SplitRatio = .70)
+train.knn <- subset(knn, sample.knn == TRUE)
+test.knn <- subset(knn, sample.knn == FALSE)
+
+predicted.samples.knn <- knn(train.knn[1:16],test.knn[1:16],train.knn$don,k=15)
+error.df.knn <- mean(test.knn$don != predicted.samples.knn)
+error.df.knn
+table(predicted.samples.knn,test.knn$don)
+
+
+confusionMatrix(factor(predicted.samples.knn), factor(test.knn$don), dnn = c("Prediction", "Reference"))
+
+
+#Teste para k de 1 a 30
+media_erro <- c(1:30)
+
+for (i in 1:30) {
+  predicted.samples.knn <- knn(train.knn[1:16],test.knn[1:16],train.knn$don,k=i)
+  media_erro[i] <- mean(test.knn$don != predicted.samples.knn)
+}
+
+k.values <- 1:30
+
+error.df <- data.frame(media_erro,k.values)
+
+ggplot(error.df,aes(x=k.values,y=media_erro)) + geom_point()+ geom_line(lty="dotted",color='red')
+
+
 
 
 
