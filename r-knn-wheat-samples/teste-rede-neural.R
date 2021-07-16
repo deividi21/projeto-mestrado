@@ -7,7 +7,6 @@ library(tensorflow)
 library(keras)
 library(tfdatasets)
 
-library(neuralnet)
 library(varhandle)
 library(randomForest)
 library(randomForestExplainer)
@@ -168,7 +167,7 @@ output <- input %>%
   layer_dense(units = 64, activation = "relu") %>%
   layer_dense(units = 64, activation = "relu") %>%
   layer_dense(units = 9, activation = "softmax") %>%
-  layer_dense(units = 1)
+  layer_dense(units = 2)
 
 model <- keras_model(input, output)
 
@@ -193,7 +192,7 @@ build_model <- function() {
     layer_dense(units = 64, activation = "relu") %>%
     layer_dense(units = 64, activation = "relu") %>%
     layer_dense(units = 9, activation = "softmax") %>%
-    layer_dense(units = 1)
+    layer_dense(units = 2)
   
   model <- keras_model(input, output)
   
@@ -233,7 +232,7 @@ c(loss, mae) %<-% (model %>% evaluate(test.b %>% select(-don), test.b$don, verbo
 
 paste0("Mean absolute error on test set: ", sprintf("%.2f", mae * 100))
 
-test_predictions <- model %>% predict(x=(test.b %>% select(-don)), batch_size=20, verbose=2)
+test_predictions <- model %>% predict(x=(test.b %>% select(-don)), batch_size=15, verbose=2)
 
 #Decisao
 fr <- tibble(
@@ -268,8 +267,7 @@ rf.model.c <- randomForest(x = select(train,-don, -id, -label, -don_label),
                          y = train$don_label,
                          xtest = select(test,-don, -id, -label, -don_label),
                          ytest = test$don_label,
-                         ntree = 150,
-                         replace = TRUE)
+                         ntree = 150)
 
 plot(rf.model.c)
 
@@ -303,8 +301,7 @@ rf.model.b <- randomForest(x = x.rf.b,
                            y = y.rf.b,
                            xtest = xtest.rf.b,
                            ytest = ytest.rf.b,
-                           ntree = 150,
-                           replace = TRUE)
+                           ntree = 150)
 
 plot(rf.model.b)
 
